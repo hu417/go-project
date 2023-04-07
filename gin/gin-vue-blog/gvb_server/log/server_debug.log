@@ -1,0 +1,27 @@
+[gvb-blog] 2023/04/05 - 16:36:14.900	info	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/routers/router.go:101	初始化路由成功
+[gvb-blog] 2023/04/05 - 17:26:37.284	info	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/routers/router.go:101	初始化路由成功
+[gvb-blog] 2023/04/05 - 17:28:36.027	error	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:26	mysql 连接失败: :123456@tcp(127.0.0.1:3306)/?charset=utf8mb4&characterEncoding=utf8mb4&connectTimeout=1000&socketTimeout=8000&autoReconnect=true&useUnicode=true&useSSL=false&parseTime=True&loc=Local&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+[gvb-blog] 2023/04/05 - 17:48:26.627	error	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:37	mysql 连接失败: :123456@tcp(10.0.0.91:3306)/?charset=utf8mb4&characterEncoding=utf8mb4&connectTimeout=1000&socketTimeout=8000&autoReconnect=true&useUnicode=true&useSSL=false&parseTime=True&loc=Local&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+[gvb-blog] 2023/04/05 - 17:50:17.701	error	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:37	mysql 连接失败: root:123456@tcp(10.0.0.91:3306)/?charset=utf8mb4&characterEncoding=utf8mb4&connectTimeout=1000&socketTimeout=8000&autoReconnect=true&useUnicode=true&useSSL=false&parseTime=True&loc=Local&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+[gvb-blog] 2023/04/05 - 17:50:49.644	error	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:37	mysql 连接失败: root:123456@tcp(10.0.0.91:3306)/?charset=utf8mb4&characterEncoding=utf8mb4&socketTimeout=8000&autoReconnect=true&useUnicode=true&useSSL=false&parseTime=True&loc=Local&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+[gvb-blog] 2023/04/05 - 17:51:09.737	error	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:37	mysql 连接失败: root:123456@tcp(10.0.0.91:3306)/?charset=utf8mb4&characterEncoding=utf8mb4&socketTimeout=8000&useUnicode=true&useSSL=false&parseTime=True&loc=Local&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+[gvb-blog] 2023/04/05 - 17:51:23.855	error	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:37	mysql 连接失败: root:123456@tcp(10.0.0.91:3306)/?charset=utf8mb4&characterEncoding=utf8mb4&socketTimeout=8000&useSSL=false&parseTime=True&loc=Local&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+[gvb-blog] 2023/04/05 - 17:51:39.734	error	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:37	mysql 连接失败: root:123456@tcp(10.0.0.91:3306)/?charset=utf8mb4&socketTimeout=8000&useSSL=false&parseTime=True&loc=Local&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+[gvb-blog] 2023/04/05 - 17:56:00.336	error	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:37	mysql 连接失败: root:123456@tcp(10.0.0.91:3306)/?charset=utf8mb4&socketTimeout=8000&parseTime=True&loc=Local&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+[gvb-blog] 2023/04/05 - 17:56:14.845	error	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:37	mysql 连接失败: root:123456@tcp(10.0.0.91:3306)/?charset=utf8mb4&parseTime=True&loc=Local&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+[gvb-blog] 2023/04/05 - 17:56:27.738	error	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:37	mysql 连接失败: root:123456@tcp(10.0.0.91:3306)/?charset=utf8mb4&parseTime=True&loc=Local&allowPublicKeyRetrieval=true
+[gvb-blog] 2023/04/05 - 17:58:26.876	info	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/routers/router.go:101	初始化路由成功
+[gvb-blog] 2023/04/05 - 17:59:44.616	info	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:40	mysql 连接成功
+
+[gvb-blog] 2023/04/05 - 17:59:44.619	info	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/routers/router.go:101	初始化路由成功
+[gvb-blog] 2023/04/05 - 22:20:22.197	info	d:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:40	mysql 连接成功
+
+[gvb-blog] 2023/04/05 - 22:20:22.198	info	d:/study/project/golang/3-gin/gin-vue-blog/gvb_server/routers/router.go:101	初始化路由成功
+[gvb-blog] 2023/04/05 - 23:11:33.285	info	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:40	mysql 连接成功
+
+[gvb-blog] 2023/04/05 - 23:11:33.313	info	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/bin/appStart.go:25	服务启动中,监听地址: 0.0.0.0:0
+[gvb-blog] 2023/04/05 - 23:27:36.345	info	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/core/gorm.go:40	mysql 连接成功
+
+[gvb-blog] 2023/04/05 - 23:27:36.369	info	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/bin/appStart.go:37	服务启动中,监听地址: 0.0.0.0:0
+[gvb-blog] 2023/04/05 - 23:27:47.106	info	D:/study/project/golang/3-gin/gin-vue-blog/gvb_server/bin/appStart.go:71	Stop Server Success
+ 
