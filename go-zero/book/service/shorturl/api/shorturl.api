@@ -1,0 +1,40 @@
+syntax = "v1"
+
+info (
+	title: // TODO: add title
+	desc: // TODO: add description
+	author: "hu417"
+	email: "hu729919300@163.com"
+)
+
+type (
+	expandReq {
+		Shorten string `form:"shorten"`
+	}
+	expandResp {
+		Url string `json:"url"`
+	}
+)
+
+type (
+	shortenReq {
+		Url string `form:"url"`
+	}
+	shortenResp {
+		Shorten string `json:"shorten"`
+	}
+)
+
+service shorturl-api {
+	@doc "短链请求接口"
+	@server(
+		handler: ShortenHandler
+	)
+	get /shorten(shortenReq) returns(shortenResp)
+	
+	@doc "短链生成接口"
+	@server(
+		handler: ExpandHandler
+	)
+	get /expand(expandReq) returns(expandResp)
+}

@@ -1,0 +1,64 @@
+syntax = "v1"
+
+info (
+	title: // TODO: add title
+	desc: // TODO: add description
+	author: "hu417"
+	email: "hu729919300@163.com"
+)
+
+type (
+ RegisterReq {
+  Username string `json:"username"`
+  Password string `json:"password"`
+  Mobile string `json:"mobile"`
+ }
+ 
+ LoginReq {
+  Username string `json:"username"`
+  Password string `json:"password"`
+ }
+ 
+ UserInfoReq {
+  Id string `path:"id"`
+ }
+ 
+ UserInfoReply {
+  Name string `json:"name"`
+  Age int `json:"age"`
+  Birthday string `json:"birthday"`
+  Description string `json:"description"`
+  Tag []string `json:"tag"`
+ }
+ 
+ UserSearchReq {
+  KeyWord string `form:"keyWord"`
+ }
+)
+
+
+service test-api {
+ @doc(
+  summary: "注册"
+ )
+ @handler register
+ post /api/user/register (RegisterReq)
+ 
+ @doc(
+  summary: "登录"
+ )
+ @handler login
+ post /api/user/login (LoginReq)
+ 
+ @doc(
+  summary: "获取用户信息"
+ )
+ @handler getUserInfo
+ get /api/user/:id (UserInfoReq) returns (UserInfoReply)
+ 
+ @doc(
+  summary: "用户搜索"
+ )
+ @handler searchUser
+ get /api/user/search (UserSearchReq) returns (UserInfoReply)
+}

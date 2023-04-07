@@ -1,0 +1,22 @@
+Name: search-api
+Host: 0.0.0.0
+Port: 8889
+
+Auth:
+  AccessSecret: "cfdvfwvwre324safceds"  # 生成jwt token的密钥
+  AccessExpire: 3600  # jwt token有效期，单位：秒
+
+Log:
+  ServiceName: app
+  Mode: console       # 日志模式，[console,file,volume]
+  # Mode: file
+  # Path: logs
+  Encoding: plain   # 输出格式，plain换行，json是一整行
+  TimeFormat: "2006-01-02T 15:04:05.000Z07:00"  # 时间格式
+  Level: info
+
+UserRpc:
+  Etcd:
+    Hosts:
+    - 10.0.0.91:2379   # etcd连接信息
+    Key: user.rpc  # user rpc的keys
