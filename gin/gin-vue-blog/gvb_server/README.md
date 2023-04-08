@@ -104,3 +104,9 @@ go mod init gvb_server
     models/res/err_code.go // 状态码的定义
 2、重新修改api
     api/settings_api/settings_info.go
+
+## 错误状态码的封装测试
+1、定义错误状态码
+    models/res/err_code.json
+2、测试
+    test/err_code_json_test.go
