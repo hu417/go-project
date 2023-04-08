@@ -34,6 +34,7 @@ func Start() {
 
 	// 启动服务
 	addr := global.Config.System.Addr()
+
 	global.Logger.Infof("服务启动中,监听地址: %s", addr)
 	// global.Router.Run(addr)
 

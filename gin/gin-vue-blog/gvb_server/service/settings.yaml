@@ -2,7 +2,7 @@
 system:
   env: release
   host: 0.0.0.0
-  addr: 8080
+  port: 8080
   name: app-server
   db-type: mysql
   oss-type: local

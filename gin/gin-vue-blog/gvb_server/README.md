@@ -89,3 +89,12 @@ go mod init gvb_server
 4、测试
     main.go
 
+## router路由配置
+// 示例: 系统设置settings
+1、定义响应
+    api/settings_api/enter.go settings_info.go
+    api/enter.go
+2、router封装
+    router/enter.go
+    router/settings_router.go
+
