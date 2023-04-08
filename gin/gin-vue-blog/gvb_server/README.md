@@ -98,3 +98,9 @@ go mod init gvb_server
     router/enter.go
     router/settings_router.go
 
+## 响应封装
+1、对响应数据的封装
+    models/res/response.go
+    models/res/err_code.go // 状态码的定义
+2、重新修改api
+    api/settings_api/settings_info.go

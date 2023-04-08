@@ -65,3 +65,11 @@
 
 [gvb-blog] [2023/04/08 11:28:00.892]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:38	服务启动中,监听地址: 0.0.0.0:8080
 [gvb-blog] [2023/04/08 11:28:28.945]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:72	Stop Server Success
+[gvb-blog] [2023/04/08 12:17:27.333]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/gorm.go:40	mysql 连接成功
+
+[gvb-blog] [2023/04/08 12:17:27.376]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:38	服务启动中,监听地址: 0.0.0.0:8080
+[gvb-blog] [2023/04/08 12:17:58.980]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:72	Stop Server Success
+[gvb-blog] [2023/04/08 12:18:04.207]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/gorm.go:40	mysql 连接成功
+
+[gvb-blog] [2023/04/08 12:18:04.246]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:38	服务启动中,监听地址: 0.0.0.0:8080
+[gvb-blog] [2023/04/08 12:18:28.387]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:72	Stop Server Success
