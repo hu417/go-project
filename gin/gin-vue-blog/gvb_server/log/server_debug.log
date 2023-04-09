@@ -73,3 +73,9 @@
 
 [gvb-blog] [2023/04/08 12:18:04.246]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:38	服务启动中,监听地址: 0.0.0.0:8080
 [gvb-blog] [2023/04/08 12:18:28.387]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:72	Stop Server Success
+[gvb-blog] [2023/04/09 14:26:49.009]	error	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/es.go:30	health check timeout: Head "http://127.0.0.1:9200": dial tcp 127.0.0.1:9200: connectex: No connection could be made because the target machine actively refused it.: no Elasticsearch node available
+[gvb-blog] [2023/04/09 14:28:15.532]	error	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/es.go:30	health check timeout: Head "http://127.0.0.1:9200": dial tcp 127.0.0.1:9200: connectex: No connection could be made because the target machine actively refused it.: no Elasticsearch node available
+[gvb-blog] [2023/04/09 14:28:15.762]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/gorm.go:40	mysql 连接成功
+
+[gvb-blog] [2023/04/09 14:28:15.763]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:41	服务启动中,监听地址: 0.0.0.0:8080
+[gvb-blog] [2023/04/09 14:28:35.983]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:75	Stop Server Success

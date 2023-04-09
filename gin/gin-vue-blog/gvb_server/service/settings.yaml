@@ -37,6 +37,18 @@ mysql:
   log-zap: false
   table-prefix: "gvb_"
 
+# es配置
+elastic:
+  host: "127.0.0.1"
+  port: "9200"
+  username: "admin"
+  password: "123456"
+  set_gzip: true
+  set_sniff: false
+  health_check_tiame: 10
+  set_errorlog: "ES-ERROR "
+  set_infolog: "ES-INFO "
+
 # jwt 认证与授权 配置
 jwt:
   buffer-time: 86400

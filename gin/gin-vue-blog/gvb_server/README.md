@@ -110,3 +110,16 @@ go mod init gvb_server
     models/res/err_code.json
 2、测试
     test/err_code_json_test.go
+
+
+## elasticsearch配置
+1、安装依赖库
+    go get -u github.com/olivere/elastic/v7
+2、配置es连接参数
+    gvb_server/config/enter.go conf_elastic.go
+    gvb_server/core/es.go
+    gvb_server/service/settings.yaml
+3、全局配置
+    gvb_server/global/global.go
+4、启动
+    gvb_server/bin/appStart.go

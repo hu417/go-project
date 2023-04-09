@@ -21,6 +21,9 @@ func Start() {
 	// 初始化日志组件
 	global.Logger = core.InitLogger()
 
+	// 初始化Elastic
+	global.ESClient = core.InitEs()
+
 	// 初始化Grom
 	global.DB = core.InitGorm()
 
