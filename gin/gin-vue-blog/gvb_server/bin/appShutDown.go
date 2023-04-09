@@ -1,9 +1,9 @@
 package bin
 
 import (
-	"fmt"
+	"gvb_server/global"
 )
 
 func ShutDown() {
-	fmt.Println("============== Shutting down ==============")
+	global.Logger.Info("============== Shutting down ==============")
 }

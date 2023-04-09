@@ -12,7 +12,6 @@ require (
 require (
 	github.com/gin-gonic/gin v1.9.0
 	github.com/olivere/elastic/v7 v7.0.32
-	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/viper v1.15.0
 	go.uber.org/zap v1.24.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1

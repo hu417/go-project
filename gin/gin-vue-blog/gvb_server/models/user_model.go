@@ -6,6 +6,7 @@ import (
 
 // UserModel 用户表
 type UserModel struct {
+	// gorm.Model它包含了逻辑删除，如果需要逻辑删除功能，则把MODEL改为gorm.Model即可
 	MODEL
 	NickName   string           `gorm:"size:36" json:"nick_name,select(c)"`  // 昵称
 	UserName   string           `gorm:"size:36" json:"user_name"`            // 用户名

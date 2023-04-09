@@ -4,6 +4,7 @@ system:
   host: 0.0.0.0
   port: 8080
   name: app-server
+  version: "1.0"
   db-type: mysql
   oss-type: local
 
@@ -25,9 +26,9 @@ logger:
 # mysql数据库配置
 mysql:
   host: 10.0.0.91
-  port: "3306"
+  port: 3306
   config: charset=utf8mb4&parseTime=True&loc=Local
-  db-name: gvb-blog
+  db: "gvb-blog"
   username: root
   password: "123456"
   max-idle-conns: 0

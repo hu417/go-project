@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"gvb_server/core"
+	"gvb_server/flag"
 	"gvb_server/global"
 	"gvb_server/routers"
 )
@@ -26,6 +27,13 @@ func Start() {
 
 	// 初始化Grom
 	global.DB = core.InitGorm()
+
+	// 命令行参数绑定
+	option := flag.Parse()
+	if flag.IsWebStop(option) {
+		flag.SwitchOption(option)
+		return
+	}
 
 	// =============================================================================
 	// = 创建监听ctrl + c, 应用退出信号的上下文
@@ -52,7 +60,7 @@ func Start() {
 	go func() {
 
 		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			fmt.Printf("%s\n", fmt.Sprintf("Start Server Error: %s", err.Error()))
+			global.Logger.Error(fmt.Sprintf("Start Server Error: %s", err.Error()))
 			return
 		}
 	}()

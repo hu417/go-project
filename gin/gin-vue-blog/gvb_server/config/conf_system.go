@@ -3,9 +3,10 @@ package config
 import "fmt"
 
 type System struct {
-	Host string `yaml:"host"`
-	Port int    `yaml:"port"`
-	Env  string `yaml:"env"`
+	Host    string `yaml:"host"`
+	Port    int    `yaml:"port"`
+	Env     string `yaml:"env"`
+	Version string `yaml:"version"`
 }
 
 func (s *System) Addr() string {

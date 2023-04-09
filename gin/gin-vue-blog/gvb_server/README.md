@@ -123,3 +123,129 @@ go mod init gvb_server
     gvb_server/global/global.go
 4、启动
     gvb_server/bin/appStart.go
+
+## gorm 表结构迁移
+1、表结构相关
+    advert_model.go          广告表
+    user_collect_model.go    用户收藏文章表
+    menu_banner_model.go     菜单banner表
+    menu_model.go            菜单表
+    enter.go
+    user_model.go            用户表
+    banner_model.go          banner表
+    comment_model.go         评论表
+    tag_model.go             标签表
+    login_data_model.go      登录信息表
+    article_model.go         文章表
+    fade_back_model.go       用户反馈表
+    message_model.go         消息表
+    // gorm.Model它包含了逻辑删除，如果需要逻辑删除功能，则把MODEL改为gorm.Model即可
+
+2、命令行参数、表结构迁移
+    flag/enter.go db.go version.go
+3、启动
+    bin/appStart.go
+4、执行参数
+    go run main.go -db
+    go run main.go -v
+
+
+## git 操作
+git clone https://github.com/hu417/go-project.git
+git init
+git config --global user.name "***"
+git config --global user.email ****@qq.com
+
+// ssl认证关闭
+git config --global http.sslVerify "false"
+git config --global credential.helper manager
+
+// 提交项目
+git add .
+git commit -m "fix: gvb-server项目
+1、新增命令行参数配置
+2、表结构迁移等配置
+" 
+git tag -a v1.6 -m "版本v1.6"
+git push -u origin main --tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
