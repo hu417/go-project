@@ -31,6 +31,11 @@ func Ok(data any, msg string, c *gin.Context) {
 	Result(Success, data, msg, c)
 }
 
+// 什么都不返回
+func OkWith(c *gin.Context) {
+	Result(Success, map[string]any{}, "成功", c)
+}
+
 // 只返回数据
 func OkWithData(data any, c *gin.Context) {
 	Result(Success, data, "成功", c)

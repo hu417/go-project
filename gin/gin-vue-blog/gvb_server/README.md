@@ -149,6 +149,27 @@ go mod init gvb_server
     go run main.go -db
     go run main.go -v
 
+## 系统配置API
+1、定义系统配置参数
+    config/conf_site_info.go enter.go
+    service/settings.go
+2、设置GET路由
+    api/settings_api/settings_info.go
+
+3、设置PUT路由
+    配置yaml文件写入方法
+    core/conf.go
+
+    添加响应函数/状态码
+    models/res/err_code.go
+    models/res/response.go
+
+    设置PUT路由 
+    api/settings_api/settings_update.go
+    routers/settings_router.go
+
+
+
 
 ## git 操作
 git clone https://github.com/hu417/go-project.git
@@ -162,11 +183,10 @@ git config --global credential.helper manager
 
 // 提交项目
 git add .
-git commit -m "fix: gvb-server项目
-1、新增命令行参数配置
-2、表结构迁移等配置
+git新增系统配置API(GET/PUT)
 " 
-git tag -a v1.6 -m "版本v1.6"
+git  commit -m "fix: gvb-server项目
+1、tag -a v1.7 -m "版本v1.7"
 git push -u origin main --tags
 
 

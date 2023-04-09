@@ -1,58 +1,55 @@
-# 系统配置
-system:
-  env: release
-  host: 0.0.0.0
-  port: 8080
-  name: app-server
-  version: "1.0"
-  db-type: mysql
-  oss-type: local
-
-# 日志配置项
-logger:
-  level: 'debug'                         # 日志级别: debug, info, warn, error, dpanic, panic, fatal, 默认 info
-  format: 'console'                     # 输出格式: console, json
-  prefix: '[gvb-blog] '                 # 日志前缀
-  director: 'log'                       # 存放日志的文件夹
-  show-line: true                       # 是否显示哪行调用
-  encode-level: 'LowercaseLevelEncoder' # LowercaseColorLevelEncoder
-  stacktrace-key: 'app'                 # 栈名
-  log-in-console: true                  # 是否输出到控制台
-  maxsize: 5                            # 日志文件最大的尺寸(M), 超限后开始自动分割
-  maxbackups: 10                        # 保留旧文件的最大个数
-  maxage: 7                             # 保留旧文件的最大天数
-  compress: true                        # 是否壓縮
-
-# mysql数据库配置
 mysql:
   host: 10.0.0.91
-  port: 3306
-  config: charset=utf8mb4&parseTime=True&loc=Local
-  db: "gvb-blog"
+  port: "3306"
+  db: gvb-blog
   username: root
   password: "123456"
+  config: charset=utf8mb4&parseTime=True&loc=Local
   max-idle-conns: 0
   max-open-conns: 0
-  log-mode: "info" # 日志级别 silent, error, warn, info, 默认 info; silent 相当于关闭日志
-  log-level: dev
-  log-zap: false
-  table-prefix: "gvb_"
-
-# es配置
+  log_mode: ""
+system:
+  host: 0.0.0.0
+  port: 8080
+  env: release
+  version: "1.0"
+logger:
+  level: debug
+  format: console
+  prefix: '[gvb-blog] '
+  director: log
+  showLine: false
+  encode-level: LowercaseLevelEncoder
+  stacktrace-key: app
+  log-in-console: true
+  maxsize: 5
+  maxbackups: 10
+  maxage: 7
+  compress: true
 elastic:
-  host: "127.0.0.1"
+  host: 127.0.0.1
   port: "9200"
-  username: "admin"
+  username: admin
   password: "123456"
-  set_gzip: true
+  set_gizp: false
   set_sniff: false
   health_check_tiame: 10
-  set_errorlog: "ES-ERROR "
-  set_infolog: "ES-INFO "
-
-# jwt 认证与授权 配置
-jwt:
-  buffer-time: 86400
-  expires-time: 604800
-  issuer: the7s
-  signing-key: d6888d35-75a4-44e5-bc9d-a3ba327bb586
+  set_errorlog: 'ES-ERROR '
+  set_infolog: 'ES-INFO '
+site_info:
+  created_at: "2023-04-10"
+  bei_an: 粤ICP备2021010654号-3
+  title: 个人博客
+  qq_image: http://www.fengfengzhidao.com/static/my/img/footer/qq.png
+  version: "1.1"
+  email: hu729919300@163.com
+  wechat_image: http://www.fengfengzhidao.com/static/my/img/footer/wechat.png
+  name: hu417
+  job: 运维开发
+  addr: 广东深圳
+  slogan: hu417个人博客
+  slogan_en: hu417blog
+  web: http://wwv.baidu.com/
+  bilibiliurl: https://www.bilibili.com/
+  gitee_url: https://gitee.com
+  github_url: https://github.com
