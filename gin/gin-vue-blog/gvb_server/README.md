@@ -168,6 +168,18 @@ go mod init gvb_server
     api/settings_api/settings_update.go
     routers/settings_router.go
 
+## 系统配置api 扩展
+- 新增邮箱，QQ，JWT，七牛云等配置
+    config/conf_email.go conf_qq.go  conf_qiniu.go conf_jwt.go
+    config/enter.go
+    services/settings.yaml
+- 新增系统设置邮箱,qq,七牛,jwt等api接口
+    api/settings_api/settings_info.go settings_updata.go 
+    routers/settings_router.go
+- 测试
+    GET/PUT http://localhost:8080/api/settings/email
+
+
 
 
 
@@ -183,10 +195,11 @@ git config --global credential.helper manager
 
 // 提交项目
 git add .
-git新增系统配置API(GET/PUT)
+git commit -m "fix: gvb-server项目
+1、新增邮箱，QQ，JWT，七牛云等配置
+2、新增系统设置邮箱,qq,七牛,jwt等api接口
 " 
-git  commit -m "fix: gvb-server项目
-1、tag -a v1.7 -m "版本v1.7"
+git tag -a v1.8 -m "版本v1.8"
 git push -u origin main --tags
 
 

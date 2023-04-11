@@ -7,4 +7,8 @@ type Config struct {
 	Logger   Logger   `yaml:"logger"`
 	Elastic  Elastic  `yaml:"elastic"`
 	SiteInfo SiteInfo `yaml:"site_info"`
+	Email    Email    `yaml:"email"`
+	QQ       QQ       `yaml:"qq"`
+	QiNiu    QiNiu    `yaml:"qi_niu"`
+	JWT      JWT      `yaml:"jwt"`
 }
