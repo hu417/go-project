@@ -1,0 +1,40 @@
+[gvb-blog] [2023/04/12 21:59:28.667]	error	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/es.go:30	health check timeout: Head "http://127.0.0.1:9200": dial tcp 127.0.0.1:9200: connectex: No connection could be made because the target machine actively refused it.: no Elasticsearch node available
+[gvb-blog] [2023/04/12 21:59:33.666]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/gorm.go:40	mysql 连接成功
+
+[gvb-blog] [2023/04/12 21:59:33.668]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:49	服务启动中,监听地址: 0.0.0.0:8080
+[gvb-blog] [2023/04/12 22:00:33.220]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/conf.go:48	配置修改成功
+[gvb-blog] [2023/04/12 22:16:26.142]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:83	Stop Server Success
+[gvb-blog] [2023/04/12 22:16:26.145]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appShutDown.go:8	============== Shutting down ==============
+[gvb-blog] [2023/04/12 22:18:32.261]	error	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/es.go:30	health check timeout: Head "http://127.0.0.1:9200": dial tcp 127.0.0.1:9200: connectex: No connection could be made because the target machine actively refused it.: no Elasticsearch node available
+[gvb-blog] [2023/04/12 22:18:32.493]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/gorm.go:40	mysql 连接成功
+
+[gvb-blog] [2023/04/12 22:18:32.495]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:49	服务启动中,监听地址: 0.0.0.0:8080
+[gvb-blog] [2023/04/12 22:19:04.803]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:23	map[Content-Disposition:[form-data; name="images"; filename="640480598kmgc1v610gr1.png"] Content-Type:[image/png]]
+[gvb-blog] [2023/04/12 22:19:04.804]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:24	640480598kmgc1v610gr1.png
+[gvb-blog] [2023/04/12 22:19:04.805]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:25	643595
+[gvb-blog] [2023/04/12 22:19:28.718]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:23	map[Content-Disposition:[form-data; name="images"; filename="640480598kmgc1v610gr1.png"] Content-Type:[image/png]]
+[gvb-blog] [2023/04/12 22:19:28.719]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:24	640480598kmgc1v610gr1.png
+[gvb-blog] [2023/04/12 22:19:28.719]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:25	643595
+[gvb-blog] [2023/04/12 22:19:28.719]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:23	map[Content-Disposition:[form-data; name="images"; filename="640480598kmgc1v610gr1.png"] Content-Type:[image/png]]
+[gvb-blog] [2023/04/12 22:19:28.720]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:24	640480598kmgc1v610gr1.png
+[gvb-blog] [2023/04/12 22:19:28.720]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:25	643595
+[gvb-blog] [2023/04/12 22:19:28.720]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:23	map[Content-Disposition:[form-data; name="images"; filename="poster.png"] Content-Type:[image/png]]
+[gvb-blog] [2023/04/12 22:19:28.721]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:24	poster.png
+[gvb-blog] [2023/04/12 22:19:28.721]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:25	702651
+[gvb-blog] [2023/04/12 22:19:28.721]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:23	map[Content-Disposition:[form-data; name="images"; filename="xx.jpg"] Content-Type:[image/jpeg]]
+[gvb-blog] [2023/04/12 22:19:28.721]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:24	xx.jpg
+[gvb-blog] [2023/04/12 22:19:28.743]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/api/images_api/images_upload.go:25	24291
+[gvb-blog] [2023/04/12 22:58:19.020]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:83	Stop Server Success
+[gvb-blog] [2023/04/12 22:58:19.024]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appShutDown.go:8	============== Shutting down ==============
+[gvb-blog] [2023/04/12 23:18:58.903]	error	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/es.go:30	health check timeout: Head "http://127.0.0.1:9200": dial tcp 127.0.0.1:9200: connectex: No connection could be made because the target machine actively refused it.: no Elasticsearch node available
+[gvb-blog] [2023/04/12 23:19:00.274]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/gorm.go:40	mysql 连接成功
+
+[gvb-blog] [2023/04/12 23:19:00.276]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:49	服务启动中,监听地址: 0.0.0.0:8080
+[gvb-blog] [2023/04/12 23:43:34.923]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:83	Stop Server Success
+[gvb-blog] [2023/04/12 23:43:34.926]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appShutDown.go:8	============== Shutting down ==============
+[gvb-blog] [2023/04/12 23:43:51.012]	error	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/es.go:30	health check timeout: Head "http://127.0.0.1:9200": dial tcp 127.0.0.1:9200: connectex: No connection could be made because the target machine actively refused it.: no Elasticsearch node available
+[gvb-blog] [2023/04/12 23:43:51.234]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/core/gorm.go:40	mysql 连接成功
+
+[gvb-blog] [2023/04/12 23:43:51.235]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:49	服务启动中,监听地址: 0.0.0.0:8080
+[gvb-blog] [2023/04/12 23:46:04.790]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appStart.go:83	Stop Server Success
+[gvb-blog] [2023/04/12 23:46:04.790]	info	D:/study/project/go-project/gin/gin-vue-blog/gvb_server/bin/appShutDown.go:8	============== Shutting down ==============

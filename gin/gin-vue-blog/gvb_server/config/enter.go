@@ -9,6 +9,7 @@ type Config struct {
 	SiteInfo SiteInfo `yaml:"site_info"`
 	Email    Email    `yaml:"email"`
 	QQ       QQ       `yaml:"qq"`
+	Upload   Upload   `yaml:"upload"`
 	QiNiu    QiNiu    `yaml:"qi_niu"`
 	JWT      JWT      `yaml:"jwt"`
 }

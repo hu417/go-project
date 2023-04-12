@@ -34,6 +34,7 @@ func InitRouter() *gin.Engine {
 	{
 		routerGroupApp := RouterGroup{apiRouterGroup}
 		routerGroupApp.SettingsGroup()
+		routerGroupApp.ImagesGroup()
 	}
 
 	return r

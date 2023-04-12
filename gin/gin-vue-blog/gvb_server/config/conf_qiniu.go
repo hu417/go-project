@@ -2,6 +2,7 @@ package config
 
 // 七牛云 对象存储配置
 type QiNiu struct {
+	Enabled   bool    `json:"enabled" yaml:"enabled"`       // 是否开启
 	AccessKey string  `json:"access_key" yaml:"access_key"` // api token
 	SecretKey string  `json:"secret_key" yaml:"secret_key"` // api secret
 	Bucket    string  `json:"bucket" yaml:"bucket"`         // 存储桶的名字

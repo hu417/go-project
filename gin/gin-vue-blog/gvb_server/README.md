@@ -174,10 +174,36 @@ go mod init gvb_server
     config/enter.go
     services/settings.yaml
 - 新增系统设置邮箱,qq,七牛,jwt等api接口
+    // 将多个配置浓缩为一个配置接口
+        好处是将多个配置浓缩为一个配置接口
+        坏处就是接口的入参和出参不统一
     api/settings_api/settings_info.go settings_updata.go 
     routers/settings_router.go
 - 测试
     GET/PUT http://localhost:8080/api/settings/email
+
+
+## 图片上传
+//上传到本地: upload
+1、定义上传路径相关配置
+    service/settings.yaml
+    config/conf_upload.go
+    config/enter.go
+
+2、定义图片上传接口
+    api/images_api/images_upload.go enter.go
+    api/enter.go
+    routers/images_router.go
+    routers/enter.go
+
+3、判断图片上传大小及保存路径
+    api/images_api/images_upload.go
+
+4、图片上传格式白名单
+    黑名单: 判断文件名后缀，如果与黑名单中的后缀符合，那就拒绝上传
+    白名单: 只能上传在白名单中出现的文件后缀
+    utils/in_list.go
+    api/images_api/images_upload.go
 
 
 
@@ -196,10 +222,10 @@ git config --global credential.helper manager
 // 提交项目
 git add .
 git commit -m "fix: gvb-server项目
-1、新增邮箱，QQ，JWT，七牛云等配置
-2、新增系统设置邮箱,qq,七牛,jwt等api接口
+1、新增图片上传api接口
+2、新增图片本地上传路径，大小，格式等判断
 " 
-git tag -a v1.8 -m "版本v1.8"
+git tag -a v1.9 -m "版本v1.9"
 git push -u origin main --tags
 
 

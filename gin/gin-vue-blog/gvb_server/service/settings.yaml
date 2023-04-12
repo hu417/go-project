@@ -57,7 +57,7 @@ email:
   host: ""
   port: 0
   user: ""
-  password: "1234"
+  password: "12345"
   default_from_emal: ""
   use_ssl: false
   user_tis: false
@@ -65,7 +65,11 @@ qq:
   app_id: ""
   key: ""
   redirect: ""
+upload:
+  path: "uploads/imgs"
+  size: 2
 qi_niu:
+  enabled: false
   access_key: ""
   secret_key: ""
   bucket: fengfengzhidao
