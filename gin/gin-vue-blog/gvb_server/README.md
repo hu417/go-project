@@ -205,7 +205,9 @@ go mod init gvb_server
     utils/in_list.go
     api/images_api/images_upload.go
 
-
+5、图片信息写入数据库
+    utils/md5.go    // md5
+    api/images_api/images_upload.go  // 写入数据库
 
 
 

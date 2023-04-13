@@ -3,8 +3,10 @@ package images_api
 import (
 	"fmt"
 	"gvb_server/global"
+	"gvb_server/models"
 	"gvb_server/models/res"
 	"gvb_server/utils"
+	"io"
 	"io/fs"
 	"os"
 	"path"
@@ -90,7 +92,29 @@ func (ImagesApi) ImagesUploadView(c *gin.Context) {
 			continue
 		}
 
-		// 上传图片
+		// 获取file的md5值
+		fileObj, err := file.Open()
+		if err != nil {
+			global.Logger.Error(err.Error())
+		}
+		byteData, err := io.ReadAll(fileObj)
+		if err != nil {
+			global.Logger.Error(err.Error())
+		}
+		imagesHash := utils.Md5(byteData)
+		// 对比数据库中的md5
+		var bannerModel models.BannerModel
+		err = global.DB.Take(&bannerModel, "hash = ?", imagesHash).Error
+		if err == nil {
+			resList = append(resList, FileUploadResponse{
+				FileName:  bannerModel.Path,
+				InSuccess: false,
+				Msg:       fmt.Sprintf("%s 图片已存在", bannerModel.Name),
+			})
+			continue
+		}
+
+		// 上传图片保存到本地
 		err = c.SaveUploadedFile(file, filePath)
 		if err != nil {
 			global.Logger.Error(err.Error())
@@ -101,6 +125,13 @@ func (ImagesApi) ImagesUploadView(c *gin.Context) {
 				Msg:       fmt.Sprintf("上传失败,%s", err.Error()),
 			})
 		}
+
+		// 上传图片保存到数据库
+		global.DB.Create(&models.BannerModel{
+			Path: filePath,
+			Hash: imagesHash,
+			Name: file.Filename,
+		})
 
 		// 上传成功
 		resList = append(resList, FileUploadResponse{
