@@ -9,4 +9,5 @@ func (r RouterGroup) ImagesGroup() {
 
 	// 绑定请求url参数
 	r.POST("images/upload", imagesApi.ImagesUploadView)
+	r.POST("images/list", imagesApi.ImahesListView)
 }

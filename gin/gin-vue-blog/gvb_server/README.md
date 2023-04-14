@@ -209,6 +209,10 @@ go mod init gvb_server
     utils/md5.go    // md5
     api/images_api/images_upload.go  // 写入数据库
 
+6、图片列表
+    api/images_api/images_list.go // 涉及到分页
+    routers/images_router.go
+
 
 
 ## git 操作
@@ -224,10 +228,9 @@ git config --global credential.helper manager
 // 提交项目
 git add .
 git commit -m "fix: gvb-server项目
-1、新增图片上传api接口
-2、新增图片本地上传路径，大小，格式等判断
+1、图片列表
 " 
-git tag -a v1.9 -m "版本v1.9"
+git tag -a v1.11 -m "版本v1.11"
 git push -u origin main --tags
 
 
