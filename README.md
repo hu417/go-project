@@ -1,16 +1,15 @@
 ### 此仓库包含go web框架学习的项目
 
-Go 学习路线:
+Go 学习路线
 
   基础学习:
-  参考学习: https://github.com/hu417/go-study/
+  
+    参考学习: https://github.com/hu417/go-study/
     
   gin框架:
   
     官方文档: https://gin-gonic.com/zh-cn/docs/
-    
     参考博客: https://www.mszlu.com/go/gin/01/01.html
-    
     示例项目: https://www.bilibili.com/video/BV1f24y1G72C
 
   gorm框架(mysql)
