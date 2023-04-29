@@ -3,7 +3,6 @@
 Go 学习路线:
 
   基础学习:
-  
     参考学习: https://github.com/hu417/go-study/
     
   gin框架:
@@ -15,16 +14,20 @@ Go 学习路线:
     示例项目: https://www.bilibili.com/video/BV1f24y1G72C
 
   gorm框架(mysql)
+  
     参考博客: https://www.mszlu.com/go/gorm/01/01.html
 
   xorm框架(mysql):
+  
     官方文档: http://xorm.topgoer.com/
     参考博客: 
 
   go-redis框架:
+  
     参考博客: https://www.mszlu.com/go/go-redis/01/01.html
 
   go-zero框架:
+  
     入门视频: 
     官方文档: https://go-zero.dev/cn/docs/introduction
     示例项目: https://www.bilibili.com/video/BV1cr4y1s7H4?p=1
