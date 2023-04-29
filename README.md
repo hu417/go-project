@@ -3,7 +3,7 @@
 Go 学习路线:
 
   基础学习:
-    参考学习: https://github.com/hu417/go-study/
+  参考学习: https://github.com/hu417/go-study/
     
   gin框架:
   
