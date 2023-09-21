@@ -9,6 +9,16 @@ import (
 )
 
 func main() {
+
+	// Gin 框架在运行的时候默认是debug模式 有： 开发：debug，生产：release，测试模式：test
+	// DebugMode indicates gin mode is debug.
+	// DebugMode = "debug"
+	// ReleaseMode indicates gin mode is release.
+	// ReleaseMode = "release"
+	// TestMode indicates gin mode is test.
+	// TestMode = "test"
+	gin.SetMode(gin.ReleaseMode)
+	
 	//1.创建router,实际返回的是一个Engine引擎,也可以说成初始化容器创建Engine引擎
 	r := gin.Default() // 默认会包含些初始化中间件: Logger(), Recovery()
 	//r:=gin.New() 了解Default与New的区别,空的Engine
