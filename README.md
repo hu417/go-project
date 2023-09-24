@@ -35,6 +35,46 @@ Go 学习路线
     进阶项目: https://github.com/Mikaelemmmm/go-zero-looklook/tree/main/doc/chinese
 
 
+Gin框架模版
+
+```bash
+.
+├── conf (配置文件)
+│   └── config.yaml
+├── controller（控制类）
+│   ├── admin.go
+│   ├── auth.go
+│   ├── base.go
+│   ├── blog.go
+│   └── controller.go
+├── dao （数据库连接）
+│   └── mysql.go
+├── log（日志文件）
+├── logger（zap logger工具类）
+│   └── logger.go
+├── main.go （入口文件）
+├── models（GORM 访问数据库）
+│   ├── base.go
+│   ├── category.go
+│   ├── comment.go
+│   ├── config.go
+│   ├── post.go
+│   ├── response.go
+│   └── user.go
+├── routers （路由）
+│   └── routers.go
+├── settings （文件配置管理）
+│   └── settings.go
+├── static （静态文件）
+├── templates（页面文件）
+└── util（工具类）
+    ├── RediStore.go
+    ├── SessionStore.go
+    ├── functions.go
+    ├── localtime.go
+    └── pager.go
+
+```
 
 
 
