@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/go-faker/faker/v4"
+	"github.com/go-faker/faker/v4" // 造数据的包
 	"github.com/google/uuid"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -15,12 +15,24 @@ import (
 // 表字段映射结构体
 type User struct {
 	gorm.Model
-	Name  string `gorm:"type:varchar(20);not null" json:"name" binding:"required" faker:"name"`
-	Age   string `gorm:"type:varchar(2);not null" json:"age" binding:"required" faker:"age"`
-	Phone string `gorm:"type:varchar(11);not null" json:"phone" binding:"required" faker:"phone"`
-	Email string `gorm:"type:varchar(20);not null" json:"email" binding:"required" faker:"email"`
-	City  string `gorm:"type:varchar(20);not null" json:"city" binding:"required" faker:"city"`
+	Name      string `gorm:"type:varchar(100);not null" json:"name" binding:"required" faker:"name,len=10"`
+	Password  string `gorm:"type:varchar(20);" json:"password" binding:"required" faker:"password,len=20"`
+	Phone     uint64 `gorm:"type:bigint;not null" json:"phone" binding:"required" faker:"phone,boundary_start=13000000000, boundary_end=13999999999"`
+	Email     string `gorm:"type:varchar(20);not null" json:"email" binding:"required" faker:"email"`
+	Timestamp string `gorm:"type:varchar(20);not null" json:"timestamp" binding:"required" faker:"timestamp"`
 	// gorm: 字段类型; json数据对应字段; binding请求绑定参数
+}
+
+type Users struct {
+	ID          string `gorm:"column:id" faker:"-"`
+	Email       string `gorm:"column:email" faker:"email"`
+	Password    string `gorm:"column:password" faker:"password"`
+	PhoneNumber string `gorm:"column:phone_number" faker:"phone_number"`
+	UserName    string `gorm:"column:username" faker:"username"`
+	FirstName   string `gorm:"first_name" faker:"first_name"`
+	LastName    string `gorm:"last_name" faker:"last_name"`
+	Century     string `gorm:"century" faker:"century"`
+	Date        string `gorm:"date" faker:"date"`
 }
 
 // 在插入记录之前，生成uuid
@@ -73,37 +85,37 @@ func main() {
 		log.Default().Println("创建用户成功")
 	}
 
-	// 2、查询
-	if list, err := Select(db); err != nil {
-		log.Fatalf("查询用户失败, err: %v", err)
-	} else {
-		log.Default().Printf("user => %v", list)
-	}
+	// // 2、查询
+	// if list, err := Select(db); err != nil {
+	// 	log.Fatalf("查询用户失败, err: %v", err)
+	// } else {
+	// 	log.Default().Printf("user => %v", list)
+	// }
 
-	// 3、分页查询
-	db = db.Model(&User{}).Where("name = ?", "Tom")
-	if users, err := SelectLimit(0, 3, db); err != nil {
-		log.Fatalf("查询用户失败, err: %v", err)
-	} else {
-		// log.Default().Printf("user => %v", users)
-		for _, v := range users {
-			log.Default().Printf("id => %v", v.ID)
-		}
-	}
+	// // 3、分页查询
+	// db = db.Model(&User{}).Where("name = ?", "Tom")
+	// if users, err := SelectLimit(0, 3, db); err != nil {
+	// 	log.Fatalf("查询用户失败, err: %v", err)
+	// } else {
+	// 	// log.Default().Printf("user => %v", users)
+	// 	for _, v := range users {
+	// 		log.Default().Printf("id => %v", v.ID)
+	// 	}
+	// }
 
-	// 4、修改
-	if err := Update(db); err != nil {
-		log.Fatalf("更新用户失败, err: %v", err)
-	} else {
-		log.Default().Println("更新用户成功")
-	}
+	// // 4、修改
+	// if err := Update(db); err != nil {
+	// 	log.Fatalf("更新用户失败, err: %v", err)
+	// } else {
+	// 	log.Default().Println("更新用户成功")
+	// }
 
-	// 5、删除
-	if err := Delete(db); err != nil {
-		log.Fatalf("删除用户失败, err: %v", err)
-	} else {
-		log.Default().Println("删除用户成功")
-	}
+	// // 5、删除
+	// if err := Delete(db); err != nil {
+	// 	log.Fatalf("删除用户失败, err: %v", err)
+	// } else {
+	// 	log.Default().Println("删除用户成功")
+	// }
 }
 
 // 新增
@@ -220,7 +232,7 @@ func Update(db *gorm.DB) error {
 	var user User
 	db.First(&user)
 	user.Name = "hh"
-	user.Age = "28"
+	user.Password = "qazwsx"
 	// Save会保存所有字段，即使字段是零值，如果保存的值没有主键，就会创建，否则则是更新指定记录
 	result := db.Debug().Where("id = ?", 10).Save(&user)
 	if result.Error != nil {
@@ -234,7 +246,7 @@ func Update(db *gorm.DB) error {
 	fmt.Println(result.Error, result.RowsAffected)
 
 	// 更新多个列
-	result = db.Model(&User{}).Where("username = ?", "zhangsan").Updates(User{Name: "zhangsan2", Age: "23"})
+	result = db.Model(&User{}).Where("username = ?", "zhangsan").Updates(User{Name: "zhangsan2", Password: "qazwsx"})
 	fmt.Println(result.Error, result.RowsAffected)
 
 	return nil
