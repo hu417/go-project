@@ -26,6 +26,7 @@ func Test_email(t *testing.T) {
 	//obj.SendAttachMsg(mailTo,cc,"网页邮件示例","来自<b>【GG】</b>的消息","/Users/bytedance/1.txt","测试.txt","html")
 
 	// 调用示例4: 模版化html
+	// 结构体参数为html中的变量
 	data := &EmailData{
 		SiteName:     "测试",
 		UserName:     "hhh",
