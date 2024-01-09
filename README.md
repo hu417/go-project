@@ -29,7 +29,9 @@ Go 学习路线
   
     入门视频: 
     官方文档: https://go-zero.dev/cn/docs/introduction
-    示例项目: https://www.bilibili.com/video/BV1cr4y1s7H4?p=1
+    示例项目: 
+    - https://www.bilibili.com/video/BV1cr4y1s7H4?p=1
+    - https://github.com/zhoushuguang/beyond
     微服务项目: https://juejin.cn/post/7036011047391592485
     进阶学习: https://www.bilibili.com/video/BV1LS4y1U72n
     进阶项目: https://github.com/Mikaelemmmm/go-zero-looklook/tree/main/doc/chinese
