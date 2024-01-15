@@ -15,6 +15,7 @@ Go 学习路线
     官方文档: https://gin-gonic.com/zh-cn/docs/
     参考博客: https://www.mszlu.com/go/gin/01/01.html
     示例项目: https://www.bilibili.com/video/BV1f24y1G72C
+    从零开发企业级 Go 应用: https://www.golangblogs.com/books/go-zero-cloud
 
   gorm框架(mysql)
   
