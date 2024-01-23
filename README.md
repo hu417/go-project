@@ -9,6 +9,9 @@ Go 学习路线
   基础学习:
   
     参考学习: https://github.com/hu417/go-study/
+
+  项目结构:
+    ddd: https://jishuzhan.net/article/1721803979219800066
     
   gin框架:
   
