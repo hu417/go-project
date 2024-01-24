@@ -22,6 +22,7 @@ Go 学习路线
       Todo List: https://github.com/borntodie-new/todo-list-backup
       从零开发企业级 Go 应用: https://www.golangblogs.com/books/go-zero-cloud
       casbin: https://github.com/kubesre/go-easy-admin
+      k8s dashboard: https://github.com/kubesre/genbu
 
   gorm框架(mysql)
   
