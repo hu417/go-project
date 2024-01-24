@@ -21,6 +21,7 @@ Go 学习路线
       博客: https://www.bilibili.com/video/BV1f24y1G72C
       Todo List: https://github.com/borntodie-new/todo-list-backup
       从零开发企业级 Go 应用: https://www.golangblogs.com/books/go-zero-cloud
+      casbin: https://github.com/kubesre/go-easy-admin
 
   gorm框架(mysql)
   
