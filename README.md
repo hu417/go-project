@@ -3,6 +3,7 @@
 IDE:
   VSCode:
     mac通过终端code 命令打开vscode
+    
     ```bash
     $ cat ~/.bash_profile 
     alias code="/Users/hellokitty/Downloads/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
