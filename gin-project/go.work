@@ -1,1 +1,9 @@
 go 1.21.0
+use ./go-demo/goroutine
+use ./grpc-demo
+use ./go-test
+use ./gin-project/bluebell
+use ./gin-project/rbac-v1
+use ./gin-project/miniblog
+use ./gin-project/rbac
+use ./gin-project/demo

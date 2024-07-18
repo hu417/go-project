@@ -1,0 +1,22 @@
+// 指定proto语言版本
+syntax = "proto3";
+
+// 生成go文件的包路径
+option go_package = "./";
+
+// proto文件包的路径
+package github.com.services;
+
+// 定义消息参数结构体
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloReply {
+  string message = 1;
+}
+
+// 服务结构体
+service Greeter {
+    rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
