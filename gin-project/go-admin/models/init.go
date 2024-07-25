@@ -8,8 +8,8 @@ import (
 var DB *gorm.DB
 
 func NewGormDB() {
-	//dsn := `root:MyNewPass5!@tcp(192.168.0.40:3306)/go-admin?charset=utf8mb4&parseTime=True&loc=Local`
-	dsn := `root:41C3ofPlTNsCpoUiaUVP!@tcp(127.0.0.1:3306)/go-admin?charset=utf8mb4&parseTime=True&loc=Local`
+	//dsn := `root:123456!@tcp(192.168.0.40:3306)/go-admin?charset=utf8mb4&parseTime=True&loc=Local`
+	dsn := `root:123456@tcp(127.0.0.1:3306)/go-admin?charset=utf8mb4&parseTime=True&loc=Local`
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		DisableForeignKeyConstraintWhenMigrating: true,
 	})
@@ -18,7 +18,9 @@ func NewGormDB() {
 		panic(err)
 	}
 
-	err = db.AutoMigrate(&SysUser{}, &SysRole{}, &SysMenu{}, &RoleMenu{}, &SysLog{})
+	if err := db.AutoMigrate(&SysUser{}, &SysRole{}, &SysMenu{}, &RoleMenu{}, &SysLog{}); err != nil {
+		panic(err)
+	}
 
 	DB = db
 }

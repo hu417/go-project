@@ -5,12 +5,14 @@
 
 ```bash
 # 生成 SSH Key
-ssh-keygen -t github -C "Github SSH Key"
-ssh-keygen -t rsa -b 4096 -C 'Github SSH Key' -f ~/.ssh/id_rsa_4096_github -P ''
+ssh-keygen -Y sign -t rsa -b 4096 -C 'Github SSH Key' -f ~/.ssh/id_rsa_4096_github -P ''
 
 ls ~/.ssh/
 私钥文件 id_rsa_4096_github
 公钥文件 id_rsa_4096_github.pub
+
+ssh-keygen -Y verify -f allowed_signers -I hi@taoshu.in -n file -s /tmp/a.txt.sig < /tmp/a.txt
+
 
 # 读取公钥文件
 cat ~/.ssh/id_rsa_4096_github.pub
