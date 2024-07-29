@@ -68,9 +68,11 @@ $ git push https://gitee.com/***/test.git  # 将本地的Git仓库信息推送�
 $ git log  # 查看git提交的日志
 
 # 添加远程仓库
-git remote add origin  仓库地址
+$ git remote add origin https://github.com/hu417/go-project.git
 # 查看当前仓库对应的远程仓库地址
-git remote -v
+$ git remote -v
+# 当前分支并建立与远程上游的跟踪
+$ git push --set-upstream origin master
 # 修改远程仓库地址
 git remote set-url origin 仓库地址
 

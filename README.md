@@ -11,7 +11,8 @@ IDE:
     ```
 前端:
 
-  项目实战: https://gitee.com/zhengqingya/java-developer-document/tree/master/%E7%9F%A5%E8%AF%86%E5%BA%93/%E5%89%8D%E7%AB%AF/03-%E2%98%86%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE%E2%98%86/web%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/02-%E3%80%90%E7%AC%AC%E4%BA%8C%E7%89%88%E3%80%91vue3+vite4/small-web/doc
+  项目实战: 
+  - https://gitee.com/zhengqingya/java-developer-document/tree/master/%E7%9F%A5%E8%AF%86%E5%BA%93/%E5%89%8D%E7%AB%AF/03-%E2%98%86%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE%E2%98%86/web%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/02-%E3%80%90%E7%AC%AC%E4%BA%8C%E7%89%88%E3%80%91vue3+vite4/small-web/doc
 
 Go 学习路线
 
@@ -20,7 +21,7 @@ Go 学习路线
     参考学习: https://github.com/hu417/go-study/
 
   项目结构:
-    ddd: https://jishuzhan.net/article/1721803979219800066
+    - ddd: https://jishuzhan.net/article/1721803979219800066
     
   gin框架:
   

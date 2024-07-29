@@ -2,7 +2,11 @@ module casbin-demo
 
 go 1.21.0
 
-require github.com/casbin/casbin/v2 v2.98.0
+require (
+	github.com/casbin/casbin/v2 v2.98.0
+	gorm.io/driver/mysql v1.5.6
+	gorm.io/gorm v1.25.8
+)
 
 require (
 	github.com/dustin/go-humanize v1.0.1 // indirect
@@ -19,10 +23,8 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/microsoft/go-mssqldb v1.6.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230126093431-47fa9a501578 // indirect
-	gorm.io/driver/mysql v1.5.6 // indirect
 	gorm.io/driver/postgres v1.5.7 // indirect
 	gorm.io/driver/sqlserver v1.5.3 // indirect
-	gorm.io/gorm v1.25.8 // indirect
 	gorm.io/plugin/dbresolver v1.3.0 // indirect
 	modernc.org/libc v1.22.2 // indirect
 	modernc.org/mathutil v1.5.0 // indirect
@@ -38,9 +40,9 @@ require (
 	github.com/cloudwego/base64x v0.1.4 // indirect
 	github.com/cloudwego/iasm v0.2.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
-	github.com/gin-contrib/cors v1.7.2 // indirect
+	github.com/gin-contrib/cors v1.7.2
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.9.1 // indirect
+	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.20.0 // indirect

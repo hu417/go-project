@@ -1,6 +1,0 @@
-Name: transform.rpc
-ListenOn: 0.0.0.0:8090
-Etcd:
-  Hosts:
-  - 10.0.0.91:2379
-  Key: transform.rpc

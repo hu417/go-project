@@ -19,14 +19,23 @@ func main() {
 		}
 	}()
 
-	e := bootstrap.InitCasbin(db, "baidu.com")
-	if e == nil {
+	// 初始化casbin
+	e, a := bootstrap.InitCasbin(db)
+	if e == nil || a == nil {
 		panic("casbin初始化失败")
 	}
+
+	defer func() {
+		if err := e.SavePolicy(); err != nil {
+			panic(err)
+		}
+	}()
+
 	global.Enforcer = e
+	global.Adapter = a
 
 	// 初始化路由
 	r := router.InitRouter()
 	// 启动服务
-	r.Run(":8080")
+	r.Run(":8081")
 }
