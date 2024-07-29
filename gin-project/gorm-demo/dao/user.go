@@ -1,30 +1,37 @@
 package dao
 
+import (
+	"gorm-demo/model"
+
+	"gorm.io/gorm"
+)
+
 type UserDao struct {
-	ID       uint   `gorm:"primary_key;auto_increment;" json:"id"`
+	*gorm.DB
 }
 
-func NewUserDao() *UserDao {
-    return &UserDao{}
+func NewUserDao(db *gorm.DB) *UserDao {
+    return &UserDao{
+		DB: db,
+	}
 }
 
 // CheckUser 查询用户是否存在
-func CheckUser(name string) bool {
-	var user UserDao
-	db.Select("id").Where("username = ?", name).First(&user)
+func (u *UserDao)CheckUser(user *model.User) bool {
+
+	u.DB.Select("id").Where("username = ?", user.UserName).First(&user)
 	if user.ID > 0 {
+		// 用户已存在
 		return true
 	}
+	// 用户不存在
 	return false
 }
  
 // CheckUpUser 更新查询
-func CheckUpUser(id int, name string) (code int) {
-	var user User
-	db.Select("id, username").Where("username = ?", name).First(&user)
-	if user.ID == uint(id) {
-		return errmsg.SUCCESS
-	}
+func (u *UserDao)CheckUpUser(user *model.User) (code int) {
+	u.DB.Select("id, username").Where("username = ?", user.UserName).First(&user)
+
 	if user.ID > 0 {
 		return errmsg.ERROR_USERNAME_USED //1001
 	}
