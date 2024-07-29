@@ -1,0 +1,29 @@
+package handler
+
+import (
+	"cloud-disk/core/internal/logic"
+	"cloud-disk/core/internal/svc"
+	"cloud-disk/core/internal/types"
+	"github.com/zeromicro/go-zero/rest/httpx"
+	"net/http"
+)
+
+func UserShareBasicCreateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.UserShareBasicCreateReq
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+			return
+		}
+
+		l := logic.NewUserShareBasicCreateLogic(r.Context(), svcCtx)
+
+		// 绑定用户身份信息
+		resp, err := l.UserShareBasicCreate(&req, r.Header.Get("UserIdentity"))
+		if err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else {
+			httpx.OkJsonCtx(r.Context(), w, resp)
+		}
+	}
+}

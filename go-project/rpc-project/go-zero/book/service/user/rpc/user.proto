@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package user;
+option go_package="./user";
+
+message Request {
+  string ping = 1;
+}
+
+message Response {
+  string pong = 1;
+}
+
+// 新增请求/响应参数
+message IdReq{
+  int64 id = 1;
+}
+
+message UserInfoReply{
+  int64 id = 1;
+  string name = 2;
+  string number = 3;
+  string gender = 4;
+}
+
+// 绑定路由
+service User {
+  rpc getUser(IdReq) returns(UserInfoReply);
+  rpc Ping(Request) returns(Response);
+}
+

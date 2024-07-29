@@ -1,0 +1,6 @@
+go 1.21.0
+
+use ./gin-project/go-admin
+use ./gin-project/casbin-demo
+use ./gin-project/jwt-demo
+use ./gin-project/gorm-demo
