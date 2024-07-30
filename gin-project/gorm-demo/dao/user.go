@@ -2,6 +2,7 @@ package dao
 
 import (
 	"gorm-demo/model"
+	"gorm-demo/utils"
 
 	"gorm.io/gorm"
 )
@@ -28,153 +29,70 @@ func (u *UserDao)CheckUser(user *model.User) bool {
 	return false
 }
  
-// CheckUpUser 更新查询
-func (u *UserDao)CheckUpUser(user *model.User) (code int) {
-	u.DB.Select("id, username").Where("username = ?", user.UserName).First(&user)
 
-	if user.ID > 0 {
-		return errmsg.ERROR_USERNAME_USED //1001
-	}
-	return errmsg.SUCCESS
-}
- 
 // CreateUser 新增用户
-func CreateUser(data *User) int {
-	//data.Password = ScryptPw(data.Password)
-	err := db.Create(&data).Error
-	if err != nil {
-		return errmsg.ERROR // 500
-	}
-	return errmsg.SUCCESS
+func (u *UserDao) CreateUser(user *model.User) error {
+
+	return  u.DB.Create(&user).Error
 }
  
 // GetUser 查询用户
-func GetUser(id int) (User, int) {
-	var user User
-	err := db.Limit(1).Where("ID = ?", id).Find(&user).Error
+func (u *UserDao) GetUser(id int) (user *model.User, err error) {
+	err = u.DB.Limit(1).Where("ID = ?", id).Find(&user).Error
+
 	if err != nil {
-		return user, errmsg.ERROR
+		return nil, err
 	}
-	return user, errmsg.SUCCESS
+	return user,nil
 }
  
 // GetUsers 查询用户列表
-func GetUsers(username string, pageSize int, pageNum int) ([]User, int64) {
-	var users []User
-	var total int64
- 
+func (u *UserDao) GetUsers(username string, pageSize int, pageNum int) (users []*model.User, total int64) {
+
 	if username != "" {
-		db.Select("id,username,role,created_at").Where(
+		// 模糊查询
+		u.DB.Select("id,username,role,created_at").Where(
 			"username LIKE ?", username+"%",
 		).Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users)
-		db.Model(&users).Where(
+
+		// 统计总数
+		u.DB.Model(&users).Where(
 			"username LIKE ?", username+"%",
 		).Count(&total)
-		return users, total
+		return 
 	}
-	db.Select("id,username,role,created_at").Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users)
-	db.Model(&users).Count(&total)
- 
-	if err != nil {
-		return users, 0
-	}
-	return users, total
+	// 查询所有
+	u.DB.Select("id,username,role,created_at").Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users)
+	// 统计总数
+	u.DB.Model(&users).Count(&total)
+	// 统计页数
+	// totalPages := int(math.Ceil(float64(total) / float64(pageSize)))
+
+	return 
 }
  
 // EditUser 编辑用户信息
-func EditUser(id int, data *User) int {
-	var user User
+func (u *UserDao) EditUser(id int, user *model.User) error {
+
 	var maps = make(map[string]interface{})
-	maps["username"] = data.Username
-	maps["role"] = data.Role
-	err = db.Model(&user).Where("id = ? ", id).Updates(maps).Error
-	if err != nil {
-		return errmsg.ERROR
-	}
-	return errmsg.SUCCESS
+	maps["username"] = user.UserName
+	maps["role"] = user.Role
+
+	return u.DB.Model(&user).Where("id = ? ", id).Updates(maps).Error
 }
  
 // ChangePassword 修改密码
-func ChangePassword(id int, data *User) int {
-	//var user User
-	//var maps = make(map[string]interface{})
-	//maps["password"] = data.Password
- 
-	err = db.Select("password").Where("id = ?", id).Updates(&data).Error
-	if err != nil {
-		return errmsg.ERROR
+func (u *UserDao) ChangePassword(id int, user *model.User) error {
+	// 密码加密
+	user = &model.User{
+		Password: utils.HashPw(user.Password),
 	}
-	return errmsg.SUCCESS
+	
+	return u.DB.Select("password").Where("id = ?", id).Updates(&user).Error
 }
  
 // DeleteUser 删除用户
-func DeleteUser(id int) int {
-	var user User
-	err = db.Where("id = ? ", id).Delete(&user).Error
-	if err != nil {
-		return errmsg.ERROR
-	}
-	return errmsg.SUCCESS
-}
- 
-// BeforeCreate 密码加密&权限控制
-func (u *User) BeforeCreate(_ *gorm.DB) (err error) {
-	u.Password = ScryptPw(u.Password)
-	u.Role = 2
-	return nil
-}
- 
-func (u *User) BeforeUpdate(_ *gorm.DB) (err error) {
-	u.Password = ScryptPw(u.Password)
-	return nil
-}
- 
-// ScryptPw 生成密码
-func ScryptPw(password string) string {
-	const cost = 10
- 
-	HashPw, err := bcrypt.GenerateFromPassword([]byte(password), cost)
-	if err != nil {
-		log.Fatal(err)
-	}
- 
-	return string(HashPw)
-}
- 
-// CheckLogin 后台登录验证
-func CheckLogin(username string, password string) (User, int) {
-	var user User
-	var PasswordErr error
- 
-	db.Where("username = ?", username).First(&user)
- 
-	PasswordErr = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
- 
-	if user.ID == 0 {
-		return user, errmsg.ERROR_USER_NOT_EXIST
-	}
-	if PasswordErr != nil {
-		return user, errmsg.ERROR_PASSWORD_WRONG
-	}
-	if user.Role != 1 {
-		return user, errmsg.ERROR_USER_NO_RIGHT
-	}
-	return user, errmsg.SUCCESS
-}
- 
-// CheckLoginFront 前台登录
-func CheckLoginFront(username string, password string) (User, int) {
-	var user User
-	var PasswordErr error
- 
-	db.Where("username = ?", username).First(&user)
- 
-	PasswordErr = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
-	if user.ID == 0 {
-		return user, errmsg.ERROR_USER_NOT_EXIST
-	}
-	if PasswordErr != nil {
-		return user, errmsg.ERROR_PASSWORD_WRONG
-	}
-	return user, errmsg.SUCCESS
+func (u *UserDao) DeleteUser(user *model.User) error {
+
+	return u.DB.Where("id = ? ", user.ID).Delete(&user).Error
 }
