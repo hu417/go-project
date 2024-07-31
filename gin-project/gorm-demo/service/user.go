@@ -38,16 +38,20 @@ func (u *UserSvc) GetUsers(username string, pageSize int, pageNum int) (data int
 	totalPages := int(math.Ceil(float64(total) / float64(pageSize)))
 
 	// 返回数据
-	data = struct{
-		Users  []*model.User
-		Total int64
+	data = struct {
+		Total     int64
+		PageSize  int
+		PageNum   int
 		TotalPage int
+		Users     []*model.User
 	}{
-		Users:    users,
-		Total:    total,
+		Total:     total,
+		PageSize:  pageSize,
+		PageNum:   pageNum,
 		TotalPage: totalPages,
+		Users:     users,
 	}
-	
+
 	return
 }
 

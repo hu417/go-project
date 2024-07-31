@@ -2,9 +2,13 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"time"
 
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 )
 
@@ -108,7 +112,7 @@ func main() {
 	            c.SaveUploadedFile(file, "static/"+file.Filename)
 		}
 		c.String(200, fmt.Sprintf("upload ok %d files", len(files)))
-	}
+	})
         //12.NoRoute处理
         r.NoRoute(func(c *gin.Context) {
 		// c.HTML(http.StatusNotFound, "404.html", nil) //转到404.html页面，再返回空
@@ -317,7 +321,7 @@ func main() {
 	// 尝试访问，添加身份认证中间件，如果已经登陆就可以执行
 	r.GET("/sayHello", AuthMiddleWare(), func(c *gin.Context) {
 		//取出中间件的值
-		usersesion := context.MustGet("usersesion").(string)
+		usersesion := c.MustGet("usersesion").(string)
 		log.Println("===============>",usersesion)
 		c.String(200, "Hello World！")
 	})

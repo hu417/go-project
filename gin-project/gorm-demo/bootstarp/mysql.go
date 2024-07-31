@@ -2,6 +2,7 @@ package bootstarp
 
 import (
 	"fmt"
+	"gorm-demo/config"
 	"os"
 	"time"
 
@@ -11,9 +12,9 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-func InitMysql() *gorm.DB {
-	dns := "root:123456@tcp(localhost:3306)/casbin-demo?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dns), &gorm.Config{
+func InitMysql(conf *config.Mysql) *gorm.DB {
+	// dns := "root:123456@tcp(localhost:3306)/casbin-demo?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(conf.Dsn()), &gorm.Config{
 		// gorm日志模式：silent
 		Logger: logger.Default.LogMode(logger.Silent),
 		// 外键约束
