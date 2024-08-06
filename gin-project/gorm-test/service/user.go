@@ -1,9 +1,9 @@
 package service
 
 import (
-	"gorm-demo/dao"
-	"gorm-demo/global"
-	"gorm-demo/model"
+	"gorm-test/dao"
+	"gorm-test/global"
+	"gorm-test/model"
 	"math"
 )
 

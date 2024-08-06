@@ -1,12 +1,8 @@
 package global
 
-import (
-	"gorm-demo/config"
-
-	"gorm.io/gorm"
-)
+import "gorm.io/gorm"
 
 var (
-	Conf *config.Conf
-	DB   *gorm.DB
+	// 全局db模式
+	DB *gorm.DB
 )

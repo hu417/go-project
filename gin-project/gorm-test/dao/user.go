@@ -1,8 +1,8 @@
 package dao
 
 import (
-	"gorm-demo/model"
-	"gorm-demo/utils"
+	"gorm-test/model"
+	"gorm-test/utils"
 
 	"gorm.io/gorm"
 )

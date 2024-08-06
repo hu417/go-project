@@ -2,7 +2,7 @@ package bootstarp
 
 import (
 	"fmt"
-	"gorm-demo/config"
+	"gorm-test/config"
 	"os"
 	"time"
 

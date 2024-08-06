@@ -2,7 +2,7 @@ package bootstarp
 
 import (
 	"fmt"
-	"gorm-demo/config"
+	"gorm-test/config"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
