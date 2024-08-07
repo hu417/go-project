@@ -6,4 +6,5 @@ use ./gin-project/casbin-demo
 use ./gin-project/jwt-demo
 use ./gin-project/gorm-demo
 use ./gin-project/gorm-test
+use ./gin-project/gin-base
 
