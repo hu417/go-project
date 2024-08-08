@@ -71,7 +71,7 @@ $ git log  # 查看git提交的日志
 $ git remote add origin https://github.com/hu417/go-project.git
 # 查看当前仓库对应的远程仓库地址
 $ git remote -v
-# 解决问题
+# 解决问题: git pull --rebase
 $ git pull --rebase origin main  ##解决! [rejected]        main -> main (non-fast-forward)，避免直接push产生的bug
 # 当前分支并建立与远程上游的跟踪
 $ git push --set-upstream origin main
