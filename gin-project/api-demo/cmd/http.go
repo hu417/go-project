@@ -22,9 +22,10 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"api-demo/app/route"
+	"api-demo/internal/server"
 	"os"
 
-	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 )
 
@@ -68,14 +69,19 @@ func init() {
 }
 
 func run() {
-	r := gin.New()
+	// r := gin.New()
 
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{"Message": "Hello World"})
-	})
+	// r.GET("/", func(c *gin.Context) {
+	// 	c.JSON(200, gin.H{"Message": "Hello World"})
+	// })
 
-	err := r.Run(":8081")
-	if err != nil {
-		return
-	}
+	// err := r.Run(":8081")
+	// if err != nil {
+	// 	return
+	// }
+
+	http := server.New()
+	http.GenRouter(route.New())
+	http.Run()
+
 }

@@ -1,0 +1,23 @@
+
+app: # 应用基本配置
+  env: dev # 环境名称
+  port: 8082 # 服务监听端口号
+  name: eve # 应用名称
+
+database:
+  driver: mysql # 数据库驱动
+  host: 127.0.0.1 # 域名
+  port: 3306 # 端口号
+  database: eve # 数据库名称
+  username: root # 用户名
+  password: 123456 # 密码
+  config: timeout=5000ms&readTimeout=5000ms&writeTimeout=5000ms&charset=utf8mb4&parseTime=true&loc=Local # 编码格式
+
+logger:
+  level: debug # 日志级别
+  file_path: "/tmp/log/" # 日志存放路径
+  file_name: "eve.log" # 日志文件名称
+  max_size: 200 # 以M为单位对日志进行切割
+  max_age: 30 # 保留旧文件最大天数
+  max_backups: 5 # 保留旧文件最大份数
+  compress: true # 是否压缩归档文件

@@ -1,11 +1,12 @@
 /*
 Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
 	"fmt"
+
+	_ "api-demo/internal/bootstrap"
 
 	"github.com/spf13/cobra"
 )
@@ -22,6 +23,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("start called")
+		run()
 	},
 }
 
