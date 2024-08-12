@@ -1,10 +1,14 @@
 package bootstrap
 
 import (
+	"api-demo/app/task"
 	"api-demo/internal/config"
+	"api-demo/internal/crontab"
+	"api-demo/internal/event"
 	"api-demo/internal/global"
 	"api-demo/internal/logger"
 	"api-demo/internal/mysql"
+	"api-demo/internal/validator"
 )
 
 func init() {
@@ -20,5 +24,16 @@ func init() {
 		panic(err)
 
 	}
+
+	// 初始化验证器
+	validator.InitValidator()
+
+	// 初始化事件机制
+	global.EventDispatcher = event.New()
+
+	// 初始化定时任务
+	global.Crontab = crontab.Init()
+	global.Crontab.AddTask(task.Tasks()...)
+	global.Crontab.Start()
 
 }

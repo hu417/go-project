@@ -22,4 +22,11 @@ func (*AppRouter) AddRoute(e *gin.Engine) {
 	// 业务路由分组
 	genAdminRouter(e.Group("/admin"))
 	genAppRouter(e.Group("/app"))
+
+	// 获取所有路由
+	e.GET("/routes", func(c *gin.Context) {
+		// 获取所有路由信息
+		routesInfo := e.Routes()
+		c.JSON(200, gin.H{"routes": routesInfo})
+	})
 }

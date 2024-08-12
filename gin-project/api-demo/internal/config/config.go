@@ -1,8 +1,9 @@
 package config
 
 import (
-	"api-demo/internal/tool"
 	"fmt"
+	"path"
+	"runtime"
 
 	"github.com/spf13/viper"
 )
@@ -17,7 +18,12 @@ type Config struct {
 // GetConfig 读取配置文件
 func GetConfig() (c *Config) {
 	// 获取项目的根目录
-	rootDir, _ := tool.GetRootDir()
+	// rootDir, _ := tool.GetRootDir()
+
+	// 获取项目的根目录
+	_, filePath, _, _ := runtime.Caller(0)
+	dirPath := path.Dir(filePath)
+	rootDir := dirPath + "/../../"
 
 	// 实例化viper，并根据地址读取配置文件
 	v := viper.New()

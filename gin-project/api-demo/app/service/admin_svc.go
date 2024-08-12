@@ -9,14 +9,9 @@ type adminService struct {
 	baseService
 }
 
-func (a *adminService) Profile() (model *model.Admin) {
-	
-	// if err := a.db.First(&model).Error; err != nil {
-	// 	global.Logger.Sugar().Errorf("err => %v\n", err.Error())
-	// 	return nil
-	// }
+func (a *adminService) Profile() (model model.Admin) {
 
+	// a.db.First(&model)
 	global.DB.First(&model)
-
 	return model
 }

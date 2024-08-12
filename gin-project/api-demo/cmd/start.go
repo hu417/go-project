@@ -6,7 +6,9 @@ package cmd
 import (
 	"fmt"
 
+	_ "api-demo/app/service"
 	_ "api-demo/internal/bootstrap"
+	_ "api-demo/app/event"
 
 	"github.com/spf13/cobra"
 )

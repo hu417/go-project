@@ -22,9 +22,10 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"os"
+
 	"api-demo/app/route"
 	"api-demo/internal/server"
-	"os"
 
 	"github.com/spf13/cobra"
 )

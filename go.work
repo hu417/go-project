@@ -14,4 +14,8 @@ use ./gin-project/gorm-test
 
 use ./gin-project/gin-base
 
-use ./gin-project/api-demo
+use (
+	./gin-project/api-demo
+	./gin-project/captcha-demo
+	./gin-project/cron-demo
+)
