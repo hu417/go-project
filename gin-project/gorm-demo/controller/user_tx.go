@@ -18,7 +18,7 @@ func Tx(c *gin.Context) {
 	defer cancel()
 
 	// 需要包含在事务中执行的闭包函数
-	do := func(tx *gorm.DB) error {
+	do := func(_ *gorm.DB) error {
 		// do something ...
 		return nil
 	}
@@ -37,4 +37,3 @@ func Tx(c *gin.Context) {
 		log.Fatal(err)
 	}
 }
-

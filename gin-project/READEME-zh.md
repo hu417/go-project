@@ -374,6 +374,17 @@ clean: # 清理构建产物、临时文件等. 实现幂等删除
 
 ```
 
+### 压测
+
+wrk
+
+```go
+
+go install github.com/tsliwowicz/go-wrk@latest
+
+
+go-wrk -t=8 -c=400 -n=1000 http://127.0.0.1:4399/ping1
+```
 
 ## DB
 

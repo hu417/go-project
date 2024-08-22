@@ -10,7 +10,7 @@ use ./gin-project/jwt-demo
 
 use ./gin-project/gorm-demo
 
-use ./gin-project/gorm-test
+use ./gin-project/viper-demo
 
 use ./gin-project/gin-base
 
@@ -18,4 +18,7 @@ use (
 	./gin-project/api-demo
 	./gin-project/captcha-demo
 	./gin-project/cron-demo
+	./gin-project/gin-api-demo
+	./gin-project/ginblog
+	./gin-project/ratelimit-demo
 )
