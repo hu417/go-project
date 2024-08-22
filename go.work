@@ -20,5 +20,6 @@ use (
 	./gin-project/cron-demo
 	./gin-project/gin-api-demo
 	./gin-project/ginblog
+	./gin-project/mongodb-demo
 	./gin-project/ratelimit-demo
 )
