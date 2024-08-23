@@ -1,10 +1,24 @@
+server:
+  name: "gin-blog"
+  run_mode: "debug"
+  http_port: ":8081"
+  https_port: "8443"
+  timeout:
+    read: 60
+    write: 60
+
+
 mysql:
   host: 127.0.0.1
   port: "3306"
-  db-name: gvb-blog
+  db-name: gin-blog
   username: root
   password: "123456"
   params: charset=utf8mb4&parseTime=True&loc=Local
   max-idle-conns: 0
   max-open-conns: 0
   log_mode: ' '
+
+jwt:
+  sign_key: "qaz123"
+  expires: 3600

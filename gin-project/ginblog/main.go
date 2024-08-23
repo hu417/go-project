@@ -19,7 +19,7 @@ import (
 
 func main() {
 	// 初始化配置
-	conf, err := bootstrap.InitConf("./etc/setting.yaml")
+	conf, err := bootstrap.InitConf("./gin-project/ginblog/etc/setting.yaml")
 	if err != nil {
 		panic(err)
 	}
@@ -42,10 +42,10 @@ func main() {
 	global.DB = db
 
 	// 初始化路由
-	r := router.InitRouter()
+	r := router.InitRouter(global.Conf.Server.RunMode)
 	srv := &http.Server{
 		// Gin运行的监听端口
-		Addr: global.Conf.Server.Port,
+		Addr: global.Conf.Server.HttpPort,
 		// 要调用的处理程序，http.DefaultServeMux如果为nil
 		Handler: r,
 		// ReadTimeout是读取整个请求（包括正文）的最长持续时间。

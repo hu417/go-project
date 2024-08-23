@@ -2,7 +2,7 @@ package model
 
 import "gorm.io/gorm"
 
-// Comment 评论结构体
+// Comment 评论模型
 type Comment struct {
 	gorm.Model
 	UserId    uint   `json:"user_id"`

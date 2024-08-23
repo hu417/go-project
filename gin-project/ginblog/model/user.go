@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// User 用户模型
 type User struct {
 	gorm.Model
 	UserId   string `gorm:"primary_key;auto_increment" json:"uid" validate:"required" label:"用户ID"`

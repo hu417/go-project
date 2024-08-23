@@ -6,7 +6,9 @@ import (
 	"time"
 
 	"ginblog/config"
+	"ginblog/model"
 
+	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -17,7 +19,7 @@ func InitMysql(conf *config.Mysql) *gorm.DB {
 	// dns := "root:123456@tcp(localhost:3306)/casbin-demo?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(conf.Dsn()), &gorm.Config{
 		// gorm日志模式：silent
-		Logger: logger.Default.LogMode(logger.Silent),
+		Logger: logger.Default.LogMode(logger.Info),
 		// 外键约束
 		DisableForeignKeyConstraintWhenMigrating: true,
 		// 禁用默认事务（提高运行速度）
@@ -35,7 +37,15 @@ func InitMysql(conf *config.Mysql) *gorm.DB {
 
 	// 迁移数据表，在没有数据表结构变更时候，建议注释不执行
 	// 注意:初次运行后可注销此行
-	//_ = db.AutoMigrate(&User{}, &Article{}, &Category{}, Profile{}, Comment{})
+	if err := db.AutoMigrate(
+		&model.User{},
+		&model.Article{},
+		&model.Category{},
+		&model.Profile{},
+		&model.Comment{},
+	); err != nil {
+		zap.L().Fatal("数据库迁移失败", zap.Error(fmt.Errorf("数据库迁移失败：%v", err)))
+	}
 
 	sqlDB, _ := db.DB()
 	// SetMaxIdleCons 设置连接池中的最大闲置连接数。

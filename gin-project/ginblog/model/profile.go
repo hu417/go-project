@@ -1,7 +1,8 @@
 package model
 
 
-// 
+
+// 用户简介
 type Profile struct {
 	ID        int    `gorm:"primaryKey" json:"id"`
 	Name      string `gorm:"type:varchar(20)" json:"name"`

@@ -2,6 +2,7 @@ package model
 
 import "gorm.io/gorm"
 
+// 文章表
 type Article struct {
 	Category Category `gorm:"foreignkey:Cid"`
 	gorm.Model
