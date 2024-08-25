@@ -9,5 +9,5 @@ func (svc *UserSvc) CheckUser(username string) bool {
 	u := model.User{
 		Username: username,
 	}
-	return user.NewUserDao(svc.DB).CheckUser(&u)
+	return user.NewUserDao(svc.DB).FindUserByName(&u)
 }

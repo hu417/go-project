@@ -1,18 +1,22 @@
-package user
+package login
 
 import (
-	"net/http"
-
 	v1 "ginblog/api/v1"
 	"ginblog/global"
 	"ginblog/service/user"
 	"ginblog/utils/resp"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-// 添加用户
-func (*User) Add(ctx *gin.Context) {
+// 管理员登录
+func LoginByAdmin(ctx *gin.Context) {
+
+}
+
+// 前端登录
+func LoginByFront(ctx *gin.Context) {
 	var u v1.UserParams
 	// 绑定参数
 	err := ctx.ShouldBind(&u)

@@ -15,11 +15,14 @@ use ./gin-project/viper-demo
 use ./gin-project/gin-base
 
 use (
+	./example/val
 	./gin-project/api-demo
 	./gin-project/captcha-demo
 	./gin-project/cron-demo
 	./gin-project/gin-api-demo
+	./gin-project/gin-validator
 	./gin-project/ginblog
 	./gin-project/mongodb-demo
 	./gin-project/ratelimit-demo
+
 )
