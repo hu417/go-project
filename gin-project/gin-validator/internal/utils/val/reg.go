@@ -4,6 +4,8 @@ import (
 	"regexp"
 	"unicode"
 
+	"gin-validator/internal/request"
+
 	"github.com/go-playground/validator/v10"
 )
 
@@ -31,6 +33,16 @@ func ValidatePassword(fl validator.FieldLevel) bool {
 
 	reg := regexp.MustCompile(`^(\?=\.*\d)(\?=.*[a-z])(\?=\.*[A-Z])[a-zA-Z0-9]{8,16}$`)
 	return reg.MatchString(password)
+}
+
+// 自定义re_password结构体校验
+func SignUpParamStructLevelValidation(sl validator.StructLevel) {
+	su := sl.Current().Interface().(request.UserParams)
+
+	if su.Password != su.RePassword {
+		// 输出错误提示信息，最后一个参数就是传递的param
+		sl.ReportError(su.RePassword, "re_password", "RePassword", "eqfield", "password")
+	}
 }
 
 // 自定义手机号验证
