@@ -36,8 +36,8 @@ func ValidatePassword(fl validator.FieldLevel) bool {
 }
 
 // 自定义re_password结构体校验
-func SignUpParamStructLevelValidation(sl validator.StructLevel) {
-	su := sl.Current().Interface().(request.UserParams)
+func ValidationRePassword(sl validator.StructLevel) {
+	su := sl.Current().Interface().(request.Signup)
 
 	if su.Password != su.RePassword {
 		// 输出错误提示信息，最后一个参数就是传递的param

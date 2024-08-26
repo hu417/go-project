@@ -2,7 +2,7 @@ package bootstrap
 
 import (
 	"fmt"
-	"gin-validator/internal/request"
+	// "gin-validator/internal/request"
 	"gin-validator/internal/utils/val"
 	"reflect"
 	"strings"
@@ -30,13 +30,19 @@ func InitTrans(locale string) (trans ut.Translator, err error) {
 		})
 
 		// 为SignUpParam注册自定义校验方法
-		v.RegisterStructValidation(val.SignUpParamStructLevelValidation, request.UserParams{})
+		// v.RegisterStructValidation(val.ValidationRePassword, request.Signup{})
 
 		// 在校验器注册自定义的校验方法
 		if err := v.RegisterValidation("mobile", val.ValidateMobile); err != nil {
 			return nil, err
 		}
 		if err := v.RegisterValidation("email", val.ValidateEmail); err != nil {
+			return nil, err
+		}
+		if err := v.RegisterValidation("username", val.ValidUsername); err != nil {
+			return nil, err
+		}
+		if err := v.RegisterValidation("password", val.ValidatePassword); err != nil {
 			return nil, err
 		}
 

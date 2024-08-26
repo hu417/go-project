@@ -1,11 +1,9 @@
 package request
 
-import "gin-validator/internal/utils/val"
-
 // UserParams 注册参数
-type UserParams struct {
+type Signup struct {
 	// 必填，并且其长度至少为 4 个字符，最多为 20 个字符。
-	Username string `json:"username" binding:"required,min=4,max=20"`
+	Username string `json:"username" binding:"required,min=4,max=20,username"`
 	// 必需的，并且应符合一个名为 passwd 的自定义验证规则
 	Password string `form:"password" json:"password" binding:"required,password"`
 	// 必需的，并且其值必须与 Password 字段相等
@@ -21,22 +19,18 @@ type UserParams struct {
 	Mobile string `json:"mobile,omitempty" binding:"omitempty,required,mobile"`
 }
 
-// LoginParams 登录参数
-type LoginParams struct {
-	Username string `json:"username" validate:"required,min=4,max=20"`
-	Password string `json:"password" validate:"required,passwd"`
-}
+
 
 // GetMessages 自定义错误信息
-func (register UserParams) GetMessages() val.ValidatorMessages {
-	return val.ValidatorMessages{
+func (register Signup) GetMessages() ValidatorMessages {
+	return ValidatorMessages{
 		"name.required":      "用户名称不能为空,长度为4-20位字符",
 		"password.required":  "用户密码不能为空",
+		"password.password":  "密码格式不正确",
 		"rePassword.eqfield": "两次密码不一致",
-		// "password.password": "密码格式不正确",
-		"email.required":  "邮箱不能为空",
-		"email.email":     "邮箱格式不正确",
-		"mobile.required": "手机号码不能为空",
-		"mobile.mobile":   "手机号码格式不正确",
+		"email.required":     "邮箱不能为空",
+		"email.email":        "邮箱格式不正确",
+		"mobile.required":    "手机号码不能为空",
+		"mobile.mobile":      "手机号码格式不正确",
 	}
 }
