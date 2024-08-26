@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"gin-validator/global"
 	"gin-validator/internal/request"
-	"gin-validator/internal/utils/val"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -18,25 +18,32 @@ func Ping(ctx *gin.Context) {
 	})
 }
 
-func AddUser(c *gin.Context) {
+func Signup(c *gin.Context) {
 
 	var user request.UserParams
 
 	if err := c.ShouldBind(&user); err != nil {
-		fmt.Println(err.Error())
-		// 获取validator.ValidationErrors类型的error
-		errs, ok := err.(validator.ValidationErrors)
-		if !ok {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"msg": err.Error(),
-			})
-			return
-		}
 
+		// 获取validator.ValidationErrors类型的error
+		// errs, ok := err.(validator.ValidationErrors)
+		// if !ok {
+		// 	// 非validator.ValidationErrors类型错误直接返回
+		// 	c.JSON(http.StatusInternalServerError, gin.H{
+		// 		"code": 400,
+		// 		"msg":  err.Error(),
+		// 	})
+		// 	return
+		// }
+		// // validator.ValidationErrors类型错误则进行翻译
+		// c.JSON(http.StatusBadRequest, gin.H{
+		// 	"code": 400,
+		// 	"msg":  val.RemoveTopStruct(errs.Translate(bootstrap.Trans)),
+		// })
 		c.JSON(http.StatusBadRequest, gin.H{
-			"code": http.StatusBadRequest,
-			"msg":  val.GetErrorMsg(user, errs),
+			"code": 400,
+			"msg":  request.GetErrorMsg(&user, err),
 		})
+
 		return
 
 	}
@@ -59,8 +66,14 @@ func Login(c *gin.Context) {
 			})
 			return
 		}
+		sliceErr := []string{}
+
+		for _, e := range errs {
+			//翻译错误
+			sliceErr = append(sliceErr, e.Translate(global.Trans))
+		}
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": val.GetErrorMsg(&login, errs),
+			"msg": fmt.Sprintf("%#v", sliceErr),
 		})
 		return
 
