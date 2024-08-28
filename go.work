@@ -18,6 +18,7 @@ use (
 	./example/val
 	./gin-project/api-demo
 	./gin-project/captcha-demo
+	./gin-project/consul-demo
 	./gin-project/cron-demo
 	./gin-project/gin-api-demo
 	./gin-project/gin-validator
