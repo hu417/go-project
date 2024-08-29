@@ -25,5 +25,6 @@ use (
 	./gin-project/ginblog
 	./gin-project/mongodb-demo
 	./gin-project/ratelimit-demo
+	./gin-project/gin-es
 
 )
