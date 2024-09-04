@@ -1,30 +1,22 @@
 go 1.21.0
 
-use ./gin-project/go-admin
-
-use ./gin-project/gin-demo
-
-use ./gin-project/casbin-demo
-
-use ./gin-project/jwt-demo
-
-use ./gin-project/gorm-demo
-
-use ./gin-project/viper-demo
-
-use ./gin-project/gin-base
-
 use (
-	./example/val
-	./gin-project/api-demo
-	./gin-project/captcha-demo
-	./gin-project/consul-demo
-	./gin-project/cron-demo
-	./gin-project/gin-api-demo
-	./gin-project/gin-validator
-	./gin-project/ginblog
-	./gin-project/mongodb-demo
-	./gin-project/ratelimit-demo
-	./gin-project/gin-es
+	./gin/demo/api-demo
+	./gin/demo/captcha-demo
+	./gin/demo/casbin-demo
+	./gin/demo/consul-demo
+	./gin/demo/cron-demo
+	./gin/demo/gin-base
+	./gin/demo/gin-demo
+	./gin/demo/gin-es
+	./gin/demo/gin-validator
+	./gin/demo/gorm-demo
+	./gin/demo/jwt-demo
+	./gin/demo/mongodb-demo
+	./gin/demo/viper-demo
+	./gin/ginblog
+	./gin/go-admin
+	./gin/project/gin-api-demo
+	./gin/ratelimit-demo
 
 )
