@@ -22,7 +22,7 @@ func InitRouter(env string) *gin.Engine {
 
 	r := gin.New()
 	// 全局中间件
-	r.Use(middleware.GinLogger(), middleware.GinRecovery(true), middleware.Cors())
+	r.Use(middleware.GinLogger(), middleware.GinRecovery(true), middleware.Cors(),middleware.DefaultLimit())
 
 	// 404
 	r.NoRoute(func(ctx *gin.Context) { // 这里只是演示，不要在生产环境中直接返回HTML代码
