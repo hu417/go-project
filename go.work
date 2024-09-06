@@ -17,6 +17,7 @@ use (
 	./gin/ginblog
 	./gin/go-admin
 	./gin/project/gin-api-demo
-	./gin/ratelimit-demo
+	./gin/project/gin-api-v1
+	
 
 )
