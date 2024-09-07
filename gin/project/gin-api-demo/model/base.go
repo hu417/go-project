@@ -5,7 +5,7 @@ import (
 )
 
 // 自增ID主键
-type ID struct {
+type BaseID struct {
 	ID uint `json:"id" gorm:"primaryKey"`
 }
 

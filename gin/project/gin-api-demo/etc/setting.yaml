@@ -40,8 +40,8 @@ jwt:
 
 redis:
   addr: 127.0.0.1:6379
-  username:     "sre"       # 6.0+支持用户名
-  password:     "123456"    # 没有密码, 默认值
+  username:     ""          # 6.0+支持用户名
+  password:     "qaz123"    # 没有密码, 默认值
   db:           0           # 默认DB 0
   read_timeout:  -1         # 从网络连接中读取数据超时时间
   write_timeout: -1         # 把数据写入网络连接的超时时间

@@ -16,8 +16,7 @@ use (
 	./gin/demo/viper-demo
 	./gin/ginblog
 	./gin/go-admin
+	./gin/project/blue-bell
 	./gin/project/gin-api-demo
-	./gin/project/gin-api-v1
-	
 
 )

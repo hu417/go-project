@@ -22,7 +22,7 @@ func InitRouter(env string) *gin.Engine {
 
 	r := gin.New()
 	// 全局中间件
-	r.Use(middleware.GinLogger(), middleware.GinRecovery(true), middleware.Cors(),middleware.DefaultLimit())
+	r.Use(middleware.GinLogger(), middleware.GinRecovery(), middleware.Cors(), middleware.DefaultLimit())
 
 	// 404
 	r.NoRoute(func(ctx *gin.Context) { // 这里只是演示，不要在生产环境中直接返回HTML代码
@@ -47,7 +47,7 @@ func InitRouter(env string) *gin.Engine {
 	// 注册 api 分组路由
 	api := r.Group("/api")
 	{
-		api.GET("/ping", func(c *gin.Context) {
+		api.GET("/ping", middleware.DefaultLimit(), func(c *gin.Context) {
 			c.String(http.StatusOK, "pong")
 		})
 		api.POST("/register", v1.Register)
@@ -57,8 +57,8 @@ func InitRouter(env string) *gin.Engine {
 		{
 			auth.GET("/user/info", v1.UserInfo)
 			auth.POST("user/logout", v1.Logout)
-			auth.POST("/user/file",v1.Upload)
-			auth.POST("/user/files",v1.Uploads)
+			auth.POST("/user/file", v1.Upload)
+			auth.POST("/user/files", v1.Uploads)
 		}
 	}
 

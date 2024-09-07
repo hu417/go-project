@@ -10,11 +10,12 @@ import (
 )
 
 type User struct {
-	ID       uint   `json:"id" gorm:"column:id;primaryKey;autoIncrement"`
-	UserId   string `json:"user_id" gorm:"column:user_id;not null;index;comment:用户ID"`
-	Name     string `json:"name" gorm:"column:name;not null;comment:用户名称"`
-	Mobile   string `json:"mobile" gorm:"column:mobile;not null;index;comment:用户手机号"`
-	Password string `json:"password" gorm:"column:password;not null;default:'';comment:用户密码"`
+	BaseID
+	UserId   string `gorm:"column:user_id;not null;index;comment:用户ID" json:"user_id" `
+	Name     string `gorm:"column:name;not null;comment:用户名称" json:"name" `
+	Mobile   string `gorm:"column:mobile;not null;index;comment:用户手机号" json:"mobile" `
+	Password string `gorm:"column:password;not null;default:'';comment:用户密码" json:"password"`
+	Email    string `gorm:"column:email;not null;default:'';comment:用户邮箱" json:"-"`
 	Timestamps
 }
 

@@ -41,9 +41,9 @@ func InitializeLog() *zap.Logger {
 	if global.Conf.Log.ShowLine {
 		options = append(options,
 			zap.AddCaller(), // 开启开发模式，堆栈跟踪；日志打印输出文件名, 行号, 函数名
-			// zap.AddCallerSkip(0),                 // 向上跳 1 层
-			zap.AddStacktrace(zapcore.WarnLevel), // warn以上级别才输出堆栈信息
-			zap.Development(),                    // 可输出 dpanic, panic 级别的日志
+			// zap.AddCallerSkip(1),                 // 向上跳 1 层
+			zap.AddStacktrace(zapcore.ErrorLevel), // warn以上级别才输出堆栈信息
+			zap.Development(),                     // 可输出 dpanic, panic 级别的日志
 		)
 	}
 	options = append(options,
@@ -52,7 +52,9 @@ func InitializeLog() *zap.Logger {
 		))
 
 	// 初始化 zap
-	return zap.New(core, options...)
+	lg := zap.New(core, options...)
+	zap.ReplaceGlobals(lg)
+	return lg
 }
 
 // 创建根目录

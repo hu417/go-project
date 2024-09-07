@@ -1,108 +1,75 @@
 package middleware
 
 import (
-	"net"
-	"net/http"
-	"net/http/httputil"
-	"os"
-	"runtime/debug"
-	"strings"
+	"bytes"
+	"io"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 	"go.uber.org/zap"
 )
 
-// Ginzap.L() 接收gin框架默认的日志
-func GinLogger() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		start := time.Now()
-		path := c.Request.URL.Path      // 请求路径 eg: /test
-		query := c.Request.URL.RawQuery //query类型的请求参数：?name=1&password=2
-		// 挂起当前中间件，执行下一个中间件
-		c.Next()
-
-		cost := time.Since(start)
-
-		// Field 是 Field 的别名。给这个类型起别名极大地提高了这个包的 API 文档的可导航性。
-		// type Field struct {
-		//	Key       string
-		//	Type      FieldType // 类型，数字对应具体类型，eg: 15--->string
-		//	Integer   int64
-		//	String    string
-		//	Interface interface{}
-		//}
-
-		if c.Writer.Status() >= 400 {
-			zap.L().Warn(path,
-				zap.Int("status", c.Writer.Status()),   // 状态码 eg: 200
-				zap.String("method", c.Request.Method), // 请求方法类型 eg: GET
-				zap.String("path", path),               // 请求路径 eg: /test
-				zap.String("query", query),             // 请求参数 eg
-			)
-			return
-		}
-
-		zap.L().Info(path,
-			zap.Int("status", c.Writer.Status()),                                 // 状态码 eg: 200
-			zap.String("method", c.Request.Method),                               // 请求方法类型 eg: GET
-			zap.String("path", path),                                             // 请求路径 eg: /test
-			zap.String("query", query),                                           // 请求参数 eg: name=1&password=2
-			zap.String("ip", c.ClientIP()),                                       // 返回真实的客户端IP eg: ::1（这个就是本机IP，ipv6地址）
-			zap.String("user-agent", c.Request.UserAgent()),                      // 返回客户端的用户代理。 eg: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36
-			zap.String("errors", c.Errors.ByType(gin.ErrorTypePrivate).String()), // 返回Errors 切片中ErrorTypePrivate类型的错误
-			zap.Duration("cost", cost),                                           // 返回花费时间
-		)
-	}
+type responseBodyWriter struct {
+	gin.ResponseWriter
+	body *bytes.Buffer
 }
 
-// GinRecovery recover掉项目可能出现的panic，并使用zap记录相关日志
-func GinRecovery(stack bool) gin.HandlerFunc {
+func (w responseBodyWriter) Write(b []byte) (int, error) {
+	w.body.Write(b)
+	return w.ResponseWriter.Write(b)
+}
+
+// Logger 记录请求日志
+func GinLogger() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		defer func() {
-			if err := recover(); interface{}(err) != nil {
-				// 检查断开的连接，因为它不是保证紧急堆栈跟踪的真正条件。
-				var brokenPipe bool
-				// OpError 是 net 包中的函数通常返回的错误类型。它描述了错误的操作、网络类型和地址。
-				if ne, ok := interface{}(err).(*net.OpError); ok {
-					// SyscallError 记录来自特定系统调用的错误。
-					if se, ok := ne.Err.(*os.SyscallError); ok {
-						if strings.Contains(strings.ToLower(se.Error()), "broken pipe") {
-							brokenPipe = true
-						}
-					}
-				}
 
-				// DumpRequest 以 HTTP/1.x 连线形式返回给定的请求
-				httpRequest, _ := httputil.DumpRequest(c.Request, false)
-				if brokenPipe {
-					zap.L().Error(c.Request.URL.Path,
-						zap.Any("error", err),
-						zap.String("request", string(httpRequest)),
-					)
-					// 如果连接死了，我们就不能给它写状态
-					c.Error(interface{}(err).(error))
-					c.Abort() // 终止该中间件
-					return
-				}
+		// 获取 response 内容
+		w := &responseBodyWriter{body: &bytes.Buffer{}, ResponseWriter: c.Writer}
+		c.Writer = w
 
-				if stack {
-					zap.L().Error("[Recovery from panic]",
-						zap.Any("error", err),
-						zap.String("request", string(httpRequest)),
-						zap.String("starck", string(debug.Stack())), // 返回调用它的goroutine的格式化堆栈跟踪。
-					)
-				} else {
-					zap.L().Error("[Recovery from panic]",
-						zap.Any("error", err),
-						zap.String("request", string(httpRequest)),
-					)
-				}
-				// 调用 `Abort()` 并使用指定的状态代码写入标头。
-				// StatusInternalServerError:500
-				c.AbortWithStatus(http.StatusInternalServerError)
-			}
-		}()
+		// 获取请求数据
+		var requestBody []byte
+		if c.Request.Body != nil {
+			// c.Request.Body 是一个 buffer 对象，只能读取一次
+			requestBody, _ = io.ReadAll(c.Request.Body)
+			// 读取后，重新赋值 c.Request.Body ，以供后续的其他操作
+			c.Request.Body = io.NopCloser(bytes.NewBuffer(requestBody))
+		}
+
+		// 设置开始时间
+		start := time.Now()
 		c.Next()
+
+		// 开始记录日志的逻辑
+		cost := time.Since(start)
+		responStatus := c.Writer.Status()
+
+		logFields := []zap.Field{
+			zap.Int("status", responStatus),
+			zap.String("request", c.Request.Method+" "+c.Request.URL.String()),
+			zap.String("query", c.Request.URL.RawQuery),
+			zap.String("ip", c.ClientIP()),
+			zap.String("user-agent", c.Request.UserAgent()),
+			zap.String("errors", c.Errors.ByType(gin.ErrorTypePrivate).String()),
+			zap.String("time", cost.String()),
+		}
+		if c.Request.Method == "POST" || c.Request.Method == "PUT" || c.Request.Method == "DELETE" {
+			// 请求的内容
+			logFields = append(logFields, zap.String("Request Body", string(requestBody)))
+
+			// 响应的内容
+			logFields = append(logFields, zap.String("Response Body", w.body.String()))
+		}
+
+		if responStatus > 400 && responStatus <= 499 {
+			// 除了 StatusBadRequest 以外，warning 提示一下，常见的有 403 404，开发时都要注意
+			zap.L().Warn("HTTP Warning "+cast.ToString(responStatus), logFields...)
+		} else if responStatus >= 500 && responStatus <= 599 {
+			// 除了内部错误，记录 error
+			zap.L().Error("HTTP Error "+cast.ToString(responStatus), logFields...)
+		} else {
+			zap.L().Debug("HTTP Access Log", logFields...)
+		}
 	}
 }
