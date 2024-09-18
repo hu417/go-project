@@ -11,11 +11,14 @@ run:
 	@go run ./
 
 gotool:
-	go fmt ./
-	go vet ./
+	@go fmt ./
+	@go vet ./
 
 clean:
 	@if [ -f ${BINARY} ] ; then rm ${BINARY} ; fi
+	@go clean -cache
+	@go clean -fuzzcache
+	@go clean -modcache
 
 help:
 	@echo "make - 格式化 Go 代码, 并编译生成二进制文件"

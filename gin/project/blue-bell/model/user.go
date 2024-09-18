@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"blue-bell/pkg"
+	"blue-bell/pkg/utils"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
@@ -29,7 +29,7 @@ func (u *User) TableName() string {
 // 创建前
 func (u *User) BeforeCreate(tx *gorm.DB) error {
 	u.UserID = uuid.New().String()
-	u.PassWord = pkg.BcryptMake(u.PassWord)
+	u.PassWord = utils.BcryptMake(u.PassWord)
 	u.Timestamps.CreatedAt = time.Now().Unix()
 	return nil
 }

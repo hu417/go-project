@@ -1,4 +1,4 @@
-package pkg
+package utils
 
 import (
 	"golang.org/x/crypto/bcrypt"
@@ -15,8 +15,8 @@ func BcryptMake(pwd string) string {
 
 // BcryptMakeCheck 校验密码hash
 func BcryptMakeCheck(pwd, hashedPwd string) bool {
-	byteHash := []byte(hashedPwd)
-	err := bcrypt.CompareHashAndPassword(byteHash, []byte(pwd))
+
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPwd), []byte(pwd))
 
 	return err == nil
 }

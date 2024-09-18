@@ -1,6 +1,6 @@
 package config
 
-type Mysql struct {
+type MySql struct {
 	Driver              string `mapstructure:"driver" json:"driver" yaml:"driver"`
 	Host                string `mapstructure:"host" json:"host" yaml:"host"`
 	Port                int    `mapstructure:"port" json:"port" yaml:"port"`

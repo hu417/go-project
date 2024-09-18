@@ -1,14 +1,25 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"time"
 
 	"blue-bell/config"
+	"blue-bell/dao/mysql"
+	"blue-bell/dao/redis"
 	"blue-bell/global"
+	"blue-bell/pkg/logger"
+	"blue-bell/pkg/val"
+	"blue-bell/router"
+
+	"github.com/fvbock/endless"
+	"go.uber.org/zap"
 )
 
 func main() {
 	// 1. 加载配置，用viper从配置文件中读取信息
+	// conf := config.InitViper("./gin/project/blue-bell/etc/setting.yaml")
 	conf := config.InitViper("./etc/setting.yaml")
 	if conf == nil {
 		fmt.Println("config Init failed")
@@ -16,77 +27,79 @@ func main() {
 	}
 	global.Conf = conf
 
-	// // 2. 初始化日志
-	// if err := logger.Init(settings.Conf.LogConfig); err != nil {
-	// 	zap.L().Debug("logger init failed...")
-	// 	return
-	// }
-	// zap.L().Debug("logger success init...")
+	// 2. 初始化日志
+	if lg := logger.InitializeLog(); lg == nil {
+		zap.L().Debug("logger init failed...")
+		return
+	}
+	zap.L().Debug("logger success init...")
 
-	// // 3. 初始化MySQL连接
-	// defer mysql.Close()
-	// if err := mysql.Init(settings.Conf.MySQLConfig); err != nil {
-	// 	fmt.Printf("mysql init failed:%v\n", err)
-	// 	zap.L().Debug("mysql init failed...")
-	// 	return
-	// }
-	// zap.L().Debug("mysql init success...")
+	// 3. 初始化MySQL连接
+	db := mysql.InitializeDB()
+	if db == nil {
+		zap.L().Debug("mysql init failed...")
+		return
+	}
+	zap.L().Debug("mysql init success...")
+	global.DB = db
+	defer func() {
+		sql, _ := db.DB()
+		if err := sql.Close(); err != nil {
+			zap.L().Debug("mysql close failed")
+			return
+		}
+	}()
 
-	// // 4. 初始化Redis连接
-	// defer redis.Close()
-	// if err := redis.Init(settings.Conf.RedisConfig); err != nil {
-	// 	fmt.Printf("redis init failed:%v\n", err)
-	// 	zap.L().Debug("redis init failed")
-	// 	return
-	// }
-	// zap.L().Debug("redis init success...")
+	// 4. 初始化Redis连接
+	cli := redis.InitRedis()
+	if cli == nil {
+		zap.L().Debug("redis init failed")
+		return
+	}
+	zap.L().Debug("redis init success...")
+	global.RedisCli = cli
+	defer func() {
+		if err := cli.Close(); err != nil {
+			zap.L().Debug("redis close failed")
+			return
+		}
+	}()
 
-	// // 初始化雪花算法生成ID
-	// if err := snowflake.Init(settings.Conf.StartTime, settings.Conf.MachineID); err != nil {
-	// 	fmt.Printf("snowflake init failed:%v\n", err)
-	// 	zap.L().Debug("snowflake init failed")
-	// 	return
-	// }
-	// //fmt.Println(snowflake.GenID()) // 打印生成出来的id
-	// // 初始化validator翻译器
-	// if err := controller.InitTrans("zh"); err != nil {
-	// 	fmt.Printf("controller initTrans init failed:%v\n", err)
-	// 	zap.L().Debug("controller initTrans init failed")
-	// 	return
-	// }
-	// // 5. 注册路由
-	// r := routes.Setup()
-	// //r.Run()
+	// 5. 初始化validator翻译器
+	trans, err := val.InitTrans("zh")
+	if err != nil {
+		zap.L().Debug("controller initTrans init failed", zap.Error(err))
+		return
+	}
+	global.Trans = trans
 
-	// // 6. 启动服务（优雅关机）
-	// srv := &http.Server{
-	// 	Addr:    fmt.Sprintf(":%d", settings.Conf.Port),
-	// 	Handler: r,
-	// }
+	// 6. 创建一个10秒超时的context
+	_, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	// 7. 注册路由
+	r := router.Setup(global.Conf.System.Mode, 10)
 
-	// go func() {
-	// 	// 开启一个goroutine启动服务
-	// 	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-	// 		log.Fatalf("listen: %s\n", err)
-	// 	}
-	// }()
+	// 7. 启动服务（优雅关机）
+	/* 默认endless服务会监听下列信号：
+	syscall.SIGHUP，syscall.SIGUSR1，syscall.SIGUSR2，syscall.SIGINT，syscall.SIGTERM和syscall.SIGTSTP
+	接收到 SIGHUP 信号将触发`fork/restart` 实现优雅重启（kill -1 pid会发送SIGHUP信号）
+	接收到 syscall.SIGINT或syscall.SIGTERM 信号将触发优雅关机
+	接收到 SIGUSR2 信号将触发HammerTime
+	SIGUSR1 和 SIGTSTP 被用来触发一些用户自定义的hook函数
+	*/
+	server := endless.NewServer(global.Conf.System.Port, r)
 
-	// // 等待中断信号来优雅地关闭服务器，为关闭服务器操作设置一个5秒的超时
-	// quit := make(chan os.Signal, 1) // 创建一个接收信号的通道
-	// // kill 默认会发送 syscall.SIGTERM 信号
-	// // kill -2 发送 syscall.SIGINT 信号，我们常用的Ctrl+C就是触发系统SIGINT信号
-	// // kill -9 发送 syscall.SIGKILL 信号，但是不能被捕获，所以不需要添加它
-	// // signal.Notify把收到的 syscall.SIGINT或syscall.SIGTERM 信号转发给quit
-	// signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM) // 此处不会阻塞
-	// <-quit                                               // 阻塞在此，当接收到上述两种信号时才会往下执行
-	// zap.L().Info("Shutdown Server ...")
-	// // 创建一个5秒超时的context
-	// ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	// defer cancel()
-	// // 5秒内优雅关闭服务（将未处理完的请求处理完再关闭服务），超过5秒就超时退出
-	// if err := srv.Shutdown(ctx); err != nil {
+	// 10秒内优雅关闭服务（将未处理完的请求处理完再关闭服务），超过5秒就超时退出
+	server.ReadTimeout = 10 * time.Second  // 10s
+	server.WriteTimeout = 10 * time.Second // 10s
+	server.MaxHeaderBytes = 1 << 20        // 1MB
+
+	if err := server.ListenAndServe(); err != nil {
+		zap.L().Fatal("server start fail: ", zap.Error(err))
+	}
+	// if err := server.Shutdown(ctx); err != nil {
 	// 	zap.L().Fatal("Server Shutdown", zap.Error(err))
 	// }
 
-	// zap.L().Info("Server exiting")
+	zap.L().Info("Server start ...")
 }

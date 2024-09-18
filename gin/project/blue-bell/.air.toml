@@ -1,22 +1,32 @@
+# 工作目录
 root = "."
-testdata_dir = "testdata"
+testdata_dir = "tmp/testdata"
 tmp_dir = "tmp"
 
 [build]
   args_bin = []
-  bin = "./tmp/main"
+  # 只需要写你平常编译使用的shell命令。你也可以使用 `make`
+  # Windows平台示例: cmd = "go build -o tmp\main.exe ."
   cmd = "go build -o ./tmp/main ."
+  # 由`cmd`命令得到的二进制文件名
+  bin = "./tmp/main"
+  # 如果文件更改过于频繁，则没有必要在每次更改时都触发构建。可以设置触发构建的延迟时间
   delay = 1000
+  # 忽略这些文件扩展名或目录
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
+  # 排除以下文件
   exclude_file = []
   exclude_regex = ["_test.go"]
   exclude_unchanged = false
   follow_symlink = false
   full_bin = ""
+  # 监听以下指定目录的文件
   include_dir = []
+  # 监听以下文件扩展名的文件.
   include_ext = ["go", "tpl", "tmpl", "html"]
   include_file = []
   kill_delay = "0s"
+  # air的日志文件名，该日志文件放置在你的`tmp_dir`中
   log = "build-errors.log"
   poll = false
   poll_interval = 0
@@ -25,9 +35,11 @@ tmp_dir = "tmp"
   rerun = false
   rerun_delay = 500
   send_interrupt = false
+  # 发生构建错误时，停止运行旧的二进制文件。
   stop_on_error = false
 
 [color]
+  # 自定义每个部分显示的颜色。如果找不到颜色，使用原始的应用程序日志。
   app = ""
   build = "yellow"
   main = "magenta"
@@ -36,9 +48,11 @@ tmp_dir = "tmp"
 
 [log]
   main_only = false
-  time = false
+  # 显示日志时间
+  time = true
 
 [misc]
+  # 退出时删除tmp目录
   clean_on_exit = false
 
 [screen]

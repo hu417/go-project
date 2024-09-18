@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func InitViper(file string) *AppConfig {
+func InitViper(file string) *App {
 	// 指定配置文件
 	// 方式1：直接指定配置文件路径（相对路径或者绝对路径）
 	// 相对路径：相对执行的可执行文件的相对路径
@@ -20,7 +20,7 @@ func InitViper(file string) *AppConfig {
 		panic(err)
 	}
 	// 反序列化到Conf中
-	var conf AppConfig
+	var conf App
 	if err := viper.Unmarshal(&conf); err != nil {
 		panic(err)
 	}

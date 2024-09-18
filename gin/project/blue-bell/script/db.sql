@@ -1,6 +1,6 @@
 ---
-DROP DATABASE IF EXISTS `gin-demo`;
-CREATE DATABASE `gin-demo` CHARSET utf8mb4;
+DROP DATABASE IF EXISTS `bule-bell`;
+CREATE DATABASE `bule-bell` CHARSET utf8mb4;
 CREATE TABLE `user` (
                         `id` bigint(20) NOT NULL AUTO_INCREMENT,
                         `user_id` bigint(20) NOT NULL,
