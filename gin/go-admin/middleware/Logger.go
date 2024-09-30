@@ -4,17 +4,19 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/lionsoul2014/ip2region/binding/golang/xdb"
-	"go-admin/define"
-	"go-admin/models"
-	"go-admin/service"
-	"go-admin/utils"
 	"io"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
+
+	"go-admin/api/request"
+	"go-admin/global"
+	"go-admin/model"
+	"go-admin/pkg/utils"
+
+	"github.com/gin-gonic/gin"
+	"github.com/lionsoul2014/ip2region/binding/golang/xdb"
 )
 
 // LoggerToDb 保存日志到数据表
@@ -74,8 +76,8 @@ func LoggerToDb() gin.HandlerFunc {
 		// 请求IP
 		clientIP := utils.GetClientIP(c)
 		ipInfo := getIp2region("180.137.106.63")
-		fmt.Println("ip归属地详情：", ipInfo)
-		err := models.DB.Create(&models.SysLog{
+		fmt.Println("ip归属地详情: ", ipInfo)
+		err := global.DB.Create(&model.SysLog{
 			Browser:     os + "-" + browser,         // 浏览器和操作系统
 			RequestUri:  requestURL,                 // 请求地址
 			ClassMethod: reqUri,                     // 请求路由地址
@@ -100,9 +102,12 @@ func LoggerToDb() gin.HandlerFunc {
 }
 
 // 根据IP获取归属地
-func getIp2region(ip string) *service.IpInfo {
-	ipInfo := new(service.IpInfo)
-	var dbPath = define.DbPath
+func getIp2region(ip string) *request.IpInfo {
+
+	var (
+		ipInfo *request.IpInfo
+		dbPath = global.DbPath
+	)
 	searcher, err := xdb.NewWithFileOnly(dbPath)
 	if err != nil {
 		fmt.Printf("failed to create searcher: %s\n", err.Error())
@@ -119,9 +124,7 @@ func getIp2region(ip string) *service.IpInfo {
 		return ipInfo
 	}
 
-	ipRegion := strings.Split(region, "|")
-	newStrList := make([]string, 5)
-	newStrList = ipRegion
+	newStrList := strings.Split(region, "|")
 	// 国家
 	ipInfo.Country = newStrList[0]
 	// 区域

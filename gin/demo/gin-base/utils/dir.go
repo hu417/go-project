@@ -18,6 +18,7 @@ func PathExists(path string) (bool, error) {
 		}
 		return false, errors.New("存在同名文件")
 	}
+
 	if os.IsNotExist(err) {
 		return false, nil
 	}

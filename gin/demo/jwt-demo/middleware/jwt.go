@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"jwt-demo/global"
-	"jwt-demo/utils"
+	"jwt-demo/utils/jwt"
 	"net/http"
 	"strings"
 	"time"
@@ -30,7 +30,7 @@ func JwtMiddleWare() gin.HandlerFunc {
 		}
 
 		// 解析token
-		claims, err := utils.Newjwt().ParseJwt(global.Jwt_Scret, tokenSlice[1])
+		claims, err := jwt.ParseJwt(global.Jwt_Scret, tokenSlice[1])
 		if err != nil && claims == nil {
 			ctx.JSON(http.StatusOK, gin.H{"code": 0, "msg": "token解析失败"})
 			ctx.Abort() //阻止执行

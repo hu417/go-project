@@ -1,41 +1,28 @@
 package service
 
 import (
+	"go-admin/api/request"
+	"go-admin/dao/db"
+
 	"github.com/gin-gonic/gin"
-	"go-admin/models"
-	"net/http"
 )
 
 // GetLogList 获取日志列表
-func GetLogList(c *gin.Context) {
-	in := &GetLogListRequest{NewQueryRequest()}
-	err := c.ShouldBindQuery(in)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "参数异常",
-		})
-		return
-	}
+func GetLogList(c *gin.Context, in *request.GetLogListRequest) (interface{}, error) {
 
 	var (
 		cnt  int64
-		list = make([]*GetLogListReply, 0)
+		list = make([]*request.GetLogListReply, 0)
 	)
-	err = models.GetLogList(in.Keyword).Count(&cnt).Offset((in.Page - 1) * in.Size).Limit(in.Size).Find(&list).Error
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "数据库异常",
-		})
-		return
+	err := db.GetLogList(in.Keyword).Count(&cnt).Offset((in.Page - 1) * in.Size).Limit(in.Size).Find(&list).Error
+
+	data := struct {
+		List  []*request.GetLogListReply `json:"list"`
+		Count int64                      `json:"count"`
+	}{
+		List:  list,
+		Count: cnt,
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"msg":  "加载成功",
-		"result": gin.H{
-			"list":  list,
-			"count": cnt,
-		},
-	})
+
+	return data, err
 }

@@ -1,100 +1,72 @@
 package service
 
 import (
+	"go-admin/api/request"
+	"go-admin/dao/db"
+	"go-admin/global"
+	"go-admin/model"
+
 	"github.com/gin-gonic/gin"
-	"go-admin/models"
 	"gorm.io/gorm"
-	"net/http"
-	"strconv"
 )
 
 // GetRoleList 角色列表
-func GetRoleList(c *gin.Context) {
-	in := &GetRoleListRequest{NewQueryRequest()}
-	err := c.ShouldBindQuery(in)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "参数异常",
-		})
-		return
-	}
+func GetRoleList(c *gin.Context, in *request.GetRoleListRequest) (interface{}, error) {
 
 	var (
 		cnt  int64
-		list = make([]*GetRoleListReply, 0)
+		list = make([]*request.GetRoleListReply, 0)
 	)
-	err = models.GetRoleList(in.Keyword).Count(&cnt).Offset((in.Page - 1) * in.Size).Limit(in.Size).Find(&list).Error
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "数据库异常",
-		})
-		return
+	err := db.GetRoleList(in.Keyword).Count(&cnt).Offset((in.Page - 1) * in.Size).Limit(in.Size).Find(&list).Error
+
+	data := struct {
+		List  []*request.GetRoleListReply `json:"list"`
+		Count int64                       `json:"count"`
+	}{
+		List:  list,
+		Count: cnt,
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"msg":  "加载成功",
-		"result": gin.H{
-			"list":  list,
-			"count": cnt,
-		},
-	})
+	return data, err
+}
+
+// CheckRoleByName 判断角色名称是否存在
+func CheckRoleByName(c *gin.Context, name string) (cnt int64, err error) {
+
+	err = global.DB.Model(&model.SysRole{}).Where("name = ?", name).Count(&cnt).Error
+
+	return cnt, nil
+}
+
+// CheckRoleByIdAndName 判断指定角色id和角色名称是否存在
+func CheckRoleByIdAndName(c *gin.Context, id uint, name string) (cnt int64, err error) {
+
+	err = global.DB.Model(&model.SysRole{}).Where("id != ? AND name = ?", id, name).Count(&cnt).Error
+	return cnt, err
 }
 
 // AddRole 新增角色
-func AddRole(c *gin.Context) {
-	in := new(AddRoleRequest)
-	err := c.ShouldBindJSON(in)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "参数异常",
-		})
-		return
-	}
+func AddRole(c *gin.Context, in *request.AddRoleRequest) error {
 
-	// 1. 判断角色名称是否存在
-	var cnt int64
-	err = models.DB.Model(new(models.SysRole)).Where("name = ?", in.Name).Count(&cnt).Error
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "数据库异常，保存失败！",
-		})
-		return
-	}
-
-	// 大于0说明角色名称已经存在
-	if cnt > 0 {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "角色名称已存在",
-		})
-		return
-	}
-
-	// 2、给角色授权的菜单
-	rms := make([]*models.RoleMenu, len(in.MenuId))
+	// 1. 给角色授权的菜单
+	rms := make([]*model.RoleMenu, len(in.MenuId))
 	for i, _ := range rms {
-		rms[i] = &models.RoleMenu{
+		rms[i] = &model.RoleMenu{
 			MenuId: in.MenuId[i],
 		}
 	}
 
-	// 3、组件角色数据
-	rb := &models.SysRole{
+	// 2. 组件角色数据
+	rb := &model.SysRole{
 		Name:    in.Name,
 		IsAdmin: in.IsAdmin,
 		Sort:    in.Sort,
 		Remarks: in.Remarks,
 	}
-	// 4. 新增角色数据
-	err = models.DB.Transaction(func(tx *gorm.DB) error {
+	// 3. 新增角色数据
+	return global.DB.Transaction(func(tx *gorm.DB) error {
 		// 角色
-		err = tx.Create(rb).Error
-		if err != nil {
+		if err := tx.Create(rb).Error; err != nil {
 			return err
 		}
 		// 授权菜单
@@ -102,133 +74,58 @@ func AddRole(c *gin.Context) {
 			v.RoleId = rb.ID
 		}
 		if len(rms) > 0 {
-			err = tx.Create(rms).Error
-			if err != nil {
+			if err := tx.Create(rms).Error; err != nil {
 				return err
 			}
 		}
 		return nil
 	})
-
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "数据库异常,保存失败！",
-		})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"msg":  "新增角色成功",
-	})
-
 }
 
 // PatchRoleAdmin 更改管理员身份
-func PatchRoleAdmin(c *gin.Context) {
-	id := c.Param("id")
-	isAdmin := c.Param("isAdmin")
-	if id == "" || isAdmin == "" {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "必填参数不能为空",
-		})
-		return
-	}
+func PatchRoleAdmin(c *gin.Context, id string, isAdmin string) error {
 
 	// 更改管理员身份
-	err := models.DB.Model(new(models.SysRole)).Where("id = ?", id).Update("is_admin", isAdmin).Error
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "数据库异常",
-		})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"msg":  "修改管理员身份成功",
-	})
+	return global.DB.Model(new(model.SysRole)).Where("id = ?", id).Update("is_admin", isAdmin).Error
+
 }
 
 // GetRoleDetail 根据ID获取角色详情
-func GetRoleDetail(c *gin.Context) {
-	id := c.Param("id")
-	if id == "" {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "必填参不能为空",
-		})
-		return
-	}
-	uId, err := strconv.Atoi(id)
-	data := new(GetRoleDetailReply)
+func GetRoleDetail(c *gin.Context, uId int) (*request.GetRoleDetailReply, error) {
+
 	// 1、获取角色基本信息
-	sysRole, err := models.GetRoleDetail(uint(uId))
+	sysRole, err := db.GetRoleDetail(uint(uId))
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "数据库异常",
-		})
-		return
+
+		return nil, err
 	}
-	data.ID = sysRole.ID
-	data.Name = sysRole.Name
-	data.Sort = sysRole.Sort
-	data.IsAdmin = sysRole.IsAdmin
-	data.Remarks = sysRole.Remarks
+	// 角色详情
+	data := &request.GetRoleDetailReply{
+		ID: sysRole.ID,
+		AddRoleRequest: request.AddRoleRequest{
+			Name:    sysRole.Name,
+			IsAdmin: sysRole.IsAdmin,
+			Sort:    sysRole.Sort,
+			Remarks: sysRole.Remarks,
+		},
+	}
+
 	// 2、获取授权的菜单
-	menuIds, err := models.GetRoleMenuId(sysRole.ID, sysRole.IsAdmin == 1)
+	menuIds, err := db.GetRoleMenuId(sysRole.ID, sysRole.IsAdmin == 1)
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "获取数据失败！",
-		})
-		return
+		return nil, err
 	}
 	data.MenuId = menuIds
-	c.JSON(http.StatusOK, gin.H{
-		"code":   200,
-		"msg":    "获取成功",
-		"result": data,
-	})
+	return data, nil
 }
 
 // UpdateRole 修改角色信息
-func UpdateRole(c *gin.Context) {
-	in := new(UpdateRoleRequest)
-	err := c.ShouldBindJSON(in)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "参数异常",
-		})
-		return
-	}
+func UpdateRole(c *gin.Context, in *request.UpdateRoleRequest) error {
 
-	// 1. 判断角色名称是否已存在
-	var cnt int64
-	err = models.DB.Model(new(models.SysRole)).Where("id != ? AND name = ?", in.ID, in.Name).Count(&cnt).Error
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "数据库异常",
-		})
-		return
-	}
-	if cnt > 0 {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "角色名称已存在",
-		})
-		return
-	}
-
-	// 2. 修改数据
-	err = models.DB.Transaction(func(tx *gorm.DB) error {
-		// 3、更新角色信息
-		err = models.DB.Model(new(models.SysRole)).Where("id = ?", in.ID).Updates(map[string]any{
+	// 修改数据
+	return global.DB.Transaction(func(tx *gorm.DB) error {
+		// 更新角色信息
+		err := global.DB.Model(new(model.SysRole)).Where("id = ?", in.ID).Updates(map[string]any{
 			"name":     in.Name,
 			"is_admin": in.IsAdmin,
 			"sort":     in.Sort,
@@ -238,14 +135,14 @@ func UpdateRole(c *gin.Context) {
 			return err
 		}
 		// 删除授权的菜单老数据(使用Unscoped进行硬删除)
-		err = tx.Where("role_id = ?", in.ID).Unscoped().Delete(new(models.RoleMenu)).Error
+		err = tx.Where("role_id = ?", in.ID).Unscoped().Delete(new(model.RoleMenu)).Error
 		if err != nil {
 			return err
 		}
 		// 增加新授权的菜单数据
-		rms := make([]*models.RoleMenu, len(in.MenuId))
+		rms := make([]*model.RoleMenu, len(in.MenuId))
 		for i, _ := range rms {
-			rms[i] = &models.RoleMenu{
+			rms[i] = &model.RoleMenu{
 				RoleId: in.ID,
 				MenuId: in.MenuId[i],
 			}
@@ -258,61 +155,20 @@ func UpdateRole(c *gin.Context) {
 		}
 		return nil
 	})
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "修改失败！",
-		})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"msg":  "修改成功",
-	})
+
 }
 
 // DeleteRole 根据ID删除角色
-func DeleteRole(c *gin.Context) {
-	id := c.Param("id")
-	if id == "" {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "必填参不能为空",
-		})
-		return
-	}
-	// 删除角色
-	err := models.DB.Where("id = ? ", id).Delete(new(models.SysRole)).Error
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "数据库异常",
-		})
-		return
-	}
+func DeleteRole(c *gin.Context, id string) error {
 
-	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"msg":  "删除成功",
-	})
+	// 删除角色
+	return global.DB.Where("id = ? ", id).Delete(new(model.SysRole)).Error
 
 }
 
 // AllRole 获取所有角色
-func AllRole(c *gin.Context) {
-	list := make([]*AllListReply, 0)
-	err := models.DB.Model(models.SysRole{}).Find(&list).Error
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "获取角色列表失败！",
-		})
-		return
-	}
+func AllRole(c *gin.Context) (list []*request.AllListReply, err error) {
 
-	c.JSON(http.StatusOK, gin.H{
-		"code":   200,
-		"msg":    "加载成功",
-		"result": list,
-	})
+	err = global.DB.Model(model.SysRole{}).Find(&list).Error
+	return list, err
 }

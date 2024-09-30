@@ -1,16 +1,19 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
-	"go-admin/helper"
-	"go-admin/models"
 	"net/http"
+
+	"go-admin/global"
+	"go-admin/model"
+	"go-admin/pkg/jwt"
+
+	"github.com/gin-gonic/gin"
 )
 
 // LoginAuthCheck 登录信息认证
 func LoginAuthCheck() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		userClaim, err := helper.AnalyzeToken(c.GetHeader("AccessToken"))
+		userClaim, err := jwt.AnalyzeToken(c.GetHeader("AccessToken"))
 		if err != nil {
 			c.Abort()
 			c.JSON(http.StatusOK, gin.H{
@@ -27,8 +30,8 @@ func LoginAuthCheck() gin.HandlerFunc {
 				})
 			}
 			// 判断是否是超管
-			sysRole := new(models.SysRole)
-			err = models.DB.Model(new(models.SysRole)).Select("is_admin").
+			sysRole := new(model.SysRole)
+			err = global.DB.Model(new(model.SysRole)).Select("is_admin").
 				Where("id = ?", userClaim.RoleId).Find(sysRole).Error
 			if err != nil {
 				c.Abort()

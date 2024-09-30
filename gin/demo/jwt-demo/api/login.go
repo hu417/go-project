@@ -1,7 +1,7 @@
 package api
 
 import (
-	"jwt-demo/utils"
+	"jwt-demo/utils/jwt"
 	"jwt-demo/utils/resp"
 
 	"github.com/gin-gonic/gin"
@@ -9,7 +9,7 @@ import (
 
 func LoginHandler(ctx *gin.Context) {
 
-	token, err := utils.Newjwt().GenerateJwt(1, "admin", "admin", "123456", 60*60*24)
+	token, err := jwt.GenerateJwt(1, "admin", "admin", "123456", 60*60*24)
 	if err != nil {
 		resp.Fail(ctx, 10001, "系统错误", nil)
 
