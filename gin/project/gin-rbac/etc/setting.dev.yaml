@@ -1,0 +1,29 @@
+system:
+  host: 0.0.0.0
+  port: 8081
+  env: dev
+
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  user: root
+  password: 123456
+  dbname: gvb_rbac
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: qaz123
+  db: 0
+
+log:
+  level: debug
+  filename: tmp/logs/app.log
+  max_size: 10 # 文件大小，单位MB
+  max_backups: 5 # 最大备份数
+  max_age: 7 # 文件最多保存多少天
+  compress: false
+
+jwt:
+  secret_key: b08f2e5377  # 替换为你的密钥，Linux命令行生成：openssl rand -hex 32
+  expiration: 86400 # 令牌过期时间，这里是24小时

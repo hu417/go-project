@@ -20,4 +20,5 @@ use (
 	./gin/project/blue-bell
 	./gin/project/bluebell
 	./gin/project/gin-api-demo
+	./gin/project/gin-rbac
 )
