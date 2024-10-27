@@ -8,7 +8,7 @@ app: # 应用基本配置
 
 log:
   level: debug            # 日志等级
-  root_dir: ./tmp/logs    # 日志根目录
+  root_dir: /tmp/logs    # 日志根目录
   filename: app.log       # 日志文件名称
   format: console         # 写入格式 可选json,console
   show_line: true         # 是否显示调用行
@@ -21,10 +21,10 @@ database:
   driver: mysql           # 数据库驱动
   host: 127.0.0.1         # 域名
   port: 3306              # 端口号
-  database: gin-test      # 数据库名称
+  database: test          # 数据库名称
   username: root          # 用户名
   password: 123456        # 密码
-  config: charset=utf8&collation=utf8mb4_general_ci&parseTime=True&loc=Local&timeout=10000ms        # 编码格式
+  config: charset=utf8mb4&collation=utf8mb4_general_ci&parseTime=True&loc=Local&timeout=10000ms        # 编码格式
   max_idle_conns: 10      # 空闲连接池中连接的最大数量
   max_open_conns: 100     # 打开数据库连接的最大数量
   conn_max_life_time: 10  # 设置链接可复用的最大时间 (不要大于gin框架的timeout)

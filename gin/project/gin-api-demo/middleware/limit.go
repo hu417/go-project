@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-  
-	"gin-api-demo/utils"
+
+	"gin-api-demo/pkg/utils"
 
 	"github.com/gin-gonic/gin"
 )

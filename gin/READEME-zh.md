@@ -153,7 +153,12 @@ $ go install -x github.com/golang/protobuf/protoc-gen-go@latest
 
 安装 air 工具
 ```bash
-$ go install github.com/cosmtrek/air@latest
+
+// go安装 > 1.23
+$ go install github.com/air-verse/air@latest
+
+// 脚本安装
+$ curl -sSfL https://gh.jasonzeng.dev/https://raw.githubusercontent.com/air-verse/air/v1.61.0/install.sh | sh -s -- -b $(go env GOPATH)/bin
 
 ```
 

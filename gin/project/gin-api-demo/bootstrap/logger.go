@@ -5,16 +5,16 @@ import (
 	"time"
 
 	"gin-api-demo/global"
-	"gin-api-demo/utils"
+	"gin-api-demo/pkg/utils"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-func InitializeLog() *zap.Logger {
+func InitializeLog(dir string) *zap.Logger {
 	// 创建根目录
-	createRootDir()
+	createRootDir(dir + global.Conf.Log.RootDir)
 
 	// 设置日志等级
 	var core zapcore.Core
@@ -58,35 +58,12 @@ func InitializeLog() *zap.Logger {
 }
 
 // 创建根目录
-func createRootDir() {
-	if ok, _ := utils.PathExists(global.Conf.Log.RootDir); !ok {
-		_ = os.Mkdir(global.Conf.Log.RootDir, os.ModePerm)
+func createRootDir(path string) {
+
+	if ok, _ := utils.PathExists(path); !ok {
+		_ = os.Mkdir(path, os.ModePerm)
 	}
 }
-
-// // 设置日志等级
-// func setLogLevel() {
-// 	switch global.Conf.Log.Level {
-// 	case "debug":
-// 		level = zap.DebugLevel
-// 		options = append(options, zap.AddStacktrace(level))
-// 	case "info":
-// 		level = zap.InfoLevel
-// 	case "warn":
-// 		level = zap.WarnLevel
-// 	case "error":
-// 		level = zap.ErrorLevel
-// 		options = append(options, zap.AddStacktrace(level))
-// 	case "dpanic":
-// 		level = zap.DPanicLevel
-// 	case "panic":
-// 		level = zap.PanicLevel
-// 	case "fatal":
-// 		level = zap.FatalLevel
-// 	default:
-// 		level = zap.InfoLevel
-// 	}
-// }
 
 // 扩展 Zap
 func getZapCore() zapcore.Encoder {

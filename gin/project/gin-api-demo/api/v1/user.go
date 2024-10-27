@@ -5,9 +5,9 @@ import (
 	"errors"
 	"gin-api-demo/api/req"
 	"gin-api-demo/global"
+	"gin-api-demo/pkg/jwt"
+	"gin-api-demo/pkg/res"
 	"gin-api-demo/service"
-	"gin-api-demo/utils/jwttoken"
-	"gin-api-demo/utils/res"
 
 	"github.com/gin-gonic/gin"
 )
@@ -57,7 +57,7 @@ func Login(c *gin.Context) {
 		return
 	}
 	// 生成token
-	token, err := jwttoken.Newjwt().GenerateJwt(user.UserId, user.Name, "root", global.Conf.Jwt.Secret, global.Conf.Jwt.JwtTtl)
+	token, err := jwt.GenerateJwt(user.UserId, user.Name, "root", global.Conf.Jwt.Secret, global.Conf.Jwt.JwtTtl)
 	if err != nil {
 		res.FailByError(c, 500, BizUser, "token生成失败", &res.CustomError{
 			Code: BizUserLogin,
@@ -95,22 +95,21 @@ func UserInfo(ctx *gin.Context) {
 	res.Success(ctx, 200, BizUser, "获取成功", user)
 }
 
-
 // 用户退出
 func Logout(ctx *gin.Context) {
 	// 删除token
 	tokenStr := ctx.GetString("token_claims")
-	if tokenStr == ""  {
+	if tokenStr == "" {
 		res.Fail(ctx, 401, BizUser, "退出失败", errors.New("token为空"))
 		return
 	}
 	// 加入黑名单
-	claims := &jwttoken.MyCustomClaims{}
-	if err := json.Unmarshal([]byte(tokenStr), claims);err != nil {
+	claims := &jwt.MyCustomClaims{}
+	if err := json.Unmarshal([]byte(tokenStr), claims); err != nil {
 		res.Fail(ctx, 500, BizUser, "退出失败", err.Error())
 		return
 	}
-	if err := jwttoken.Newjwt().JoinBlackList(claims);err != nil {
+	if err := jwt.JoinBlackList(claims); err != nil {
 		res.Fail(ctx, 500, BizUser, "退出失败", err.Error())
 		return
 	}
@@ -118,4 +117,4 @@ func Logout(ctx *gin.Context) {
 }
 func UserUpdate(ctx *gin.Context) {}
 func UserDelete(ctx *gin.Context) {}
-func UserList(ctx *gin.Context) {}
+func UserList(ctx *gin.Context)   {}

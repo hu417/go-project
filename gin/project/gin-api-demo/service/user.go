@@ -7,7 +7,7 @@ import (
 	"gin-api-demo/dao"
 	"gin-api-demo/global"
 	"gin-api-demo/model"
-	"gin-api-demo/utils"
+	"gin-api-demo/pkg/utils"
 )
 
 type userSvc struct {
@@ -61,30 +61,30 @@ func (u *userSvc) GetUserInfo(userId string) (user model.User, err error) {
 	result := global.DB.Where("user_id = ?", userId).First(&user)
 	if result.RowsAffected == 0 {
 		err = errors.New("用户不存在")
-		return 
+		return
 	}
 	user.Password = "**********"
-	return 
+	return
 }
 
 // 获取用户列表
 func (u *userSvc) GetUserList(page, limit int, name string) (interface{}, error) {
-	users,count,err := dao.NewUserDao().List(&model.User{
+	users, count, err := dao.NewUserDao().List(&model.User{
 		Name: name,
-	 },page,limit)
-	
-	 data := struct {
-		Count int64  `json:"count"`
+	}, page, limit)
+
+	data := struct {
+		Count int64        `json:"count"`
 		User  []model.User `json:"users"`
-		Page  int `json:"page"`
-		Limit int `json:"limit"`
-	 }{
+		Page  int          `json:"page"`
+		Limit int          `json:"limit"`
+	}{
 		Count: count,
 		User:  users,
 		Page:  page,
 		Limit: limit,
-	 }
+	}
 
-	 return data,err
+	return data, err
 
 }

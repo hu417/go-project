@@ -3,6 +3,7 @@ package main
 import (
 	"gin-api-demo/bootstrap"
 	"gin-api-demo/global"
+	"gin-api-demo/pkg/utils"
 	"gin-api-demo/router"
 	"log"
 	"time"
@@ -12,11 +13,14 @@ import (
 )
 
 func main() {
+	//
+	dir := utils.GetPath() + "/gin/project/gin-api-demo"
+
 	// 初始化配置
-	bootstrap.InitConfig("./etc/setting.yaml")
+	bootstrap.InitConfig(dir + "/etc/setting.yaml")
 
 	// 初始化日志
-	global.Log = bootstrap.InitializeLog()
+	global.Log = bootstrap.InitializeLog(dir)
 	// 替换zap包中全局的logger实例，后续在其他包中只需使用zap.L()调用即可
 	zap.ReplaceGlobals(global.Log)
 

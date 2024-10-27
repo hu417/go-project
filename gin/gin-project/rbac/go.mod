@@ -1,6 +1,6 @@
 module rbac
 
-go 1.21.0
+go 1.21.13
 
 require github.com/casbin/gorm-adapter v1.0.0
 

@@ -22,7 +22,13 @@ func InitRouter(env string) *gin.Engine {
 
 	r := gin.New()
 	// 全局中间件
-	r.Use(middleware.GinLogger(), middleware.GinRecovery(), middleware.Cors(), middleware.DefaultLimit())
+	r.Use(
+		middleware.GinLogger(),
+		middleware.GinRecovery(),
+		middleware.Cors(),
+		middleware.DefaultLimit(),
+		middleware.Retry(10*1024*1024),
+	)
 
 	// 404
 	r.NoRoute(func(ctx *gin.Context) { // 这里只是演示，不要在生产环境中直接返回HTML代码
@@ -39,9 +45,6 @@ func InitRouter(env string) *gin.Engine {
 		r.StaticFile("/", "./static/dist/index.html")
 		r.Static("/assets", "./static/dist/assets")
 		r.StaticFile("/favicon.ico", "./gin-project/gin-api-demo/static/dist/logo.png")
-		// 其他静态资源
-		r.Static("/public", "./static")
-		r.Static("/storage", "./storage/app/public")
 	}
 
 	// 注册 api 分组路由
@@ -61,6 +64,22 @@ func InitRouter(env string) *gin.Engine {
 			auth.POST("/user/files", v1.Uploads)
 		}
 	}
+
+	//获取所有路由
+	r.GET("routers", func(c *gin.Context) {
+		type path struct {
+			Method string
+			Path   string
+		}
+		var list []path
+		routers := r.Routes()
+		for _, v := range routers {
+			list = append(list, path{Method: v.Method, Path: v.Path})
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"routes": list,
+		})
+	})
 
 	return r
 }

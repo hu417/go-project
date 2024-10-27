@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"gin-api-demo/utils"
+	"gin-api-demo/pkg/utils"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"

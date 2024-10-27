@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"strings"
 
-	"gin-api-demo/utils/val"
+	"gin-api-demo/pkg/val"
 
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/locales/en"

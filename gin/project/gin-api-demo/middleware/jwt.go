@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"gin-api-demo/global"
-	"gin-api-demo/utils/jwttoken"
+	"gin-api-demo/pkg/jwt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -33,7 +33,7 @@ func Jwt() gin.HandlerFunc {
 		}
 
 		// 解析token
-		claims, err := jwttoken.Newjwt().ParseJwt(global.Conf.Jwt.Secret, tokenSlice[1])
+		claims, err := jwt.ParseJwt(global.Conf.Jwt.Secret, tokenSlice[1])
 		if err != nil && claims == nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"code": 0, "msg": "token解析失败"})
 			ctx.Abort() //阻止执行
@@ -66,7 +66,7 @@ func Jwt() gin.HandlerFunc {
 
 		}
 		// 判断token是否在黑名单
-		ok, err := jwttoken.Newjwt().IsInBlacklist(string(claimsJSON))
+		ok, err := jwt.IsInBlacklist(string(claimsJSON))
 		if err != nil || ok {
 			ctx.JSON(http.StatusUnauthorized, gin.H{"code": 0, "msg": "token已失效,请重新登录"})
 			ctx.Abort() //阻止执行

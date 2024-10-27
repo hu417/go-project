@@ -489,7 +489,9 @@ type student struct {
 GORM提供了自动迁移功能，可以使用AutoMigrate方法自动创建、更新和删除数据库表：
 
 ```go
-db.AutoMigrate(&student{}, &Order{}, &Product{})
+// 创建表时添加后缀
+db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&User{})
+
 ```
 
 在上面的代码中，我们使用`AutoMigrate`方法自动迁移`student、Order`和`Product`表。
@@ -499,12 +501,17 @@ db.AutoMigrate(&student{}, &Order{}, &Product{})
 例如将Name修改为Name1，进行迁移，会多出一个name1的字段
 
 生成的表结构如下
-
 ```SQL
 CREATE TABLE `f_students` (`id` bigint unsigned AUTO_INCREMENT,`name` longtext,`email` longtext,PRIMARY KEY (`id`))
 ```
-
 默认的类型太大了
+
+注意 AutoMigrate 会自动创建数据库外键约束，您可以在初始化时禁用此功能，例如：
+```go
+db, err := gorm.Open(sqlite.Open("gorm.db"), &gorm.Config{
+  DisableForeignKeyConstraintWhenMigrating: true,
+})
+```
 
 ### 修改大小
 

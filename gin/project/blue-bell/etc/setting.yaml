@@ -24,7 +24,7 @@ database:
   dbname: blue-bell      # 数据库名称
   username: root          # 用户名
   password: 123456        # 密码
-  config: charset=utf8&collation=utf8mb4_general_ci&parseTime=True&loc=Local&timeout=10000ms        # 编码格式
+  config: charset=utf8mb4&collation=utf8mb4_general_ci&parseTime=True&loc=Local&timeout=10000ms        # 编码格式
   max_idle_conns: 10      # 空闲连接池中连接的最大数量
   max_open_conns: 100     # 打开数据库连接的最大数量
   conn_max_life_time: 10  # 设置链接可复用的最大时间 (不要大于gin框架的timeout)

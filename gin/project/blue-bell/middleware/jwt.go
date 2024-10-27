@@ -17,7 +17,6 @@ func Jwt() gin.HandlerFunc {
 		// 放行登录 //
 		// 创建一个跳过JWT认证的路由组
 		skipPaths := []string{
-			"/",
 			"/ping",
 			"/api/v1/login",
 			"/api/v1/signup",
